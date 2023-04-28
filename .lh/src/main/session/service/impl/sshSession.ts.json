@@ -1,0 +1,38 @@
+{
+    "sourceFile": "src/main/session/service/impl/sshSession.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 5,
+            "patches": [
+                {
+                    "date": 1682597155331,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1682597409628,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n import { ISession, ISessionOptions } from '../session'\n \n export interface SshOptions extends ISessionOptions {\n-  protocol: string\n+  privateKey: string\n }\n \n export class SshSession extends ISession {}\n"
+                },
+                {
+                    "date": 1682597559458,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,5 +3,9 @@\n export interface SshOptions extends ISessionOptions {\n   privateKey: string\n }\n \n-export class SshSession extends ISession {}\n+export class SshSession extends ISession {\n+  constructor(options: SshOptions){\n+    super(options.)\n+  }\n+}\n"
+                },
+                {
+                    "date": 1682597573272,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,8 @@\n   privateKey: string\n }\n \n export class SshSession extends ISession {\n-  constructor(options: SshOptions){\n-    super(options.)\n+  constructor(options: SshOptions) {\n+    super(options.name, options.protocol)\n   }\n }\n"
+                },
+                {
+                    "date": 1682597590941,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,12 @@\n import { ISession, ISessionOptions } from '../session'\n \n export interface SshOptions extends ISessionOptions {\n-  privateKey: string\n+  privateKey?: string\n }\n \n export class SshSession extends ISession {\n+  privateKey?: string\n   constructor(options: SshOptions) {\n     super(options.name, options.protocol)\n   }\n }\n"
+                },
+                {
+                    "date": 1682597601834,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,6 +7,7 @@\n export class SshSession extends ISession {\n   privateKey?: string\n   constructor(options: SshOptions) {\n     super(options.name, options.protocol)\n+    this.privateKey = options.privateKey\n   }\n }\n"
+                }
+            ],
+            "date": 1682597155331,
+            "name": "Commit-0",
+            "content": "import { ISession, ISessionOptions } from '../session'\n\nexport interface SshOptions extends ISessionOptions {\n  protocol: string\n}\n\nexport class SshSession extends ISession {}\n"
+        }
+    ]
+}

@@ -1,0 +1,114 @@
+{
+    "sourceFile": "src/main/session/session.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 24,
+            "patches": [
+                {
+                    "date": 1682591633596,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1682591718408,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n-class BaseSession {\r\n-  constructor(options) {}\r\n-\r\n-  connect() {}\r\n-\r\n-  disconnect() {}\r\n-\r\n-  attachTo(container) {}\r\n-}\r\n+class BaseSession {\n+  constructor(options) {}\n+\n+  connect() {}\n+\n+  disconnect() {}\n+\n+  attachTo(container) {}\n+}\n"
+                },
+                {
+                    "date": 1682591832995,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +0,0 @@\n-class BaseSession {\n-  constructor(options) {}\n-\n-  connect() {}\n-\n-  disconnect() {}\n-\n-  attachTo(container) {}\n-}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1682591867615,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,1 +1,3 @@\n-\n+class BaseSession {\r\n+  id: string\r\n+}\r\n"
+                },
+                {
+                    "date": 1682591873007,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,3 +1,3 @@\n-class BaseSession {\r\n-  id: string\r\n-}\r\n+class BaseSession {\n+  id: string\n+}\n"
+                },
+                {
+                    "date": 1682591903708,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,3 +1,5 @@\n class BaseSession {\n   id: string\n+  name: string\n+  constructor(options) {}\n }\n"
+                },
+                {
+                    "date": 1682591941280,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,9 @@\n+export interface ISessionOptions {\n+  host: string\n+  username: string\n+  password: string\n+}\n class BaseSession {\n   id: string\n   name: string\n   constructor(options) {}\n"
+                },
+                {
+                    "date": 1682592133039,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,15 @@\n   host: string\n   username: string\n   password: string\n }\n+export type SESSION_TYPE = 'ssh'| 'ftp' | 'sftp' | 'telnet' | 'webdav' | 'vnc' | 'serial' | 'shell'\n class BaseSession {\n   id: string\n   name: string\n-  constructor(options) {}\n+  type: string\n+  constructor(options: ISessionOptions) {}\n+\n+  connect() {}\n+\n+  disconnect() {}\n }\n"
+                },
+                {
+                    "date": 1682592140705,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,13 +2,13 @@\n   host: string\n   username: string\n   password: string\n }\n-export type SESSION_TYPE = 'ssh'| 'ftp' | 'sftp' | 'telnet' | 'webdav' | 'vnc' | 'serial' | 'shell'\n+export type SESSION_TYPE = 'ssh' | 'ftp' | 'sftp' | 'telnet' | 'webdav' | 'vnc' | 'serial' | 'shell'\n class BaseSession {\n   id: string\n   name: string\n-  type: string\n+  type: SESSION_TYPE\n   constructor(options: ISessionOptions) {}\n \n   connect() {}\n \n"
+                },
+                {
+                    "date": 1682592401825,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n   username: string\n   password: string\n }\n export type SESSION_TYPE = 'ssh' | 'ftp' | 'sftp' | 'telnet' | 'webdav' | 'vnc' | 'serial' | 'shell'\n-class BaseSession {\n+export class BaseSession {\n   id: string\n   name: string\n   type: SESSION_TYPE\n   constructor(options: ISessionOptions) {}\n"
+                },
+                {
+                    "date": 1682593618426,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,13 +3,14 @@\n   username: string\n   password: string\n }\n export type SESSION_TYPE = 'ssh' | 'ftp' | 'sftp' | 'telnet' | 'webdav' | 'vnc' | 'serial' | 'shell'\n-export class BaseSession {\n+export class BaseSession<O extends ISessionOptions> {\n   id: string\n   name: string\n   type: SESSION_TYPE\n-  constructor(options: ISessionOptions) {}\n+  options: O\n+  constructor(options: O) {}\n \n   connect() {}\n \n   disconnect() {}\n"
+                },
+                {
+                    "date": 1682594678866,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,6 +12,8 @@\n   constructor(options: O) {}\n \n   connect() {}\n \n+  duplicate() {}\n+\n   disconnect() {}\n }\n"
+                },
+                {
+                    "date": 1682594698915,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,5 +15,15 @@\n \n   duplicate() {}\n \n   disconnect() {}\n+\n+  /**\n+   * 销毁会话\n+   * 因为会话很有可能会在duplicate时，被复制的会话引用\n+   * 所以当所有引用被解除时才是销毁会话的时机\n+   */\n+  dispose() {\n+    // 清除所有监听者\n+    this.removeAllListeners()\n+  }\n }\n"
+                },
+                {
+                    "date": 1682594903238,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,12 @@\n   id: string\n   name: string\n   type: SESSION_TYPE\n   options: O\n-  constructor(options: O) {}\n+  constructor(name: string, type: SESSION_TYPE) {\n+    this.name = name\n+    this.type = type\n+  }\n \n   connect() {}\n \n   duplicate() {}\n"
+                },
+                {
+                    "date": 1682594908924,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,6 @@\n    * 销毁会话\n    * 因为会话很有可能会在duplicate时，被复制的会话引用\n    * 所以当所有引用被解除时才是销毁会话的时机\n    */\n-  dispose() {\n-    // 清除所有监听者\n-    this.removeAllListeners()\n-  }\n+  dispose() {}\n }\n"
+                },
+                {
+                    "date": 1682594915145,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,8 @@\n export class BaseSession<O extends ISessionOptions> {\n   id: string\n   name: string\n   type: SESSION_TYPE\n-  options: O\n   constructor(name: string, type: SESSION_TYPE) {\n     this.name = name\n     this.type = type\n   }\n"
+                },
+                {
+                    "date": 1682594955843,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,17 +3,20 @@\n   username: string\n   password: string\n }\n export type SESSION_TYPE = 'ssh' | 'ftp' | 'sftp' | 'telnet' | 'webdav' | 'vnc' | 'serial' | 'shell'\n-export class BaseSession<O extends ISessionOptions> {\n-  id: string\n+export class BaseSession {\n+  private id: string\n   name: string\n   type: SESSION_TYPE\n   constructor(name: string, type: SESSION_TYPE) {\n     this.name = name\n     this.type = type\n   }\n \n+  getSessionId() {\n+    return this.id\n+  }\n   connect() {}\n \n   duplicate() {}\n \n"
+                },
+                {
+                    "date": 1682594981237,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,9 @@\n   private id: string\n   name: string\n   type: SESSION_TYPE\n   constructor(name: string, type: SESSION_TYPE) {\n+    this.id = crypto.randomUUID()\n     this.name = name\n     this.type = type\n   }\n \n"
+                },
+                {
+                    "date": 1682594987155,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,9 @@\n \n   getSessionId() {\n     return this.id\n   }\n+\n   connect() {}\n \n   duplicate() {}\n \n"
+                },
+                {
+                    "date": 1682595002687,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,8 +13,12 @@\n     this.name = name\n     this.type = type\n   }\n \n+  /**\n+   * 获取会话ID\n+   * @returns 会话ID\n+   */\n   getSessionId() {\n     return this.id\n   }\n \n"
+                },
+                {
+                    "date": 1682595322002,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n   username: string\n   password: string\n }\n export type SESSION_TYPE = 'ssh' | 'ftp' | 'sftp' | 'telnet' | 'webdav' | 'vnc' | 'serial' | 'shell'\n-export class BaseSession {\n+export class ISession {\n   private id: string\n   name: string\n   type: SESSION_TYPE\n   constructor(name: string, type: SESSION_TYPE) {\n"
+                },
+                {
+                    "date": 1682595538892,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n   username: string\n   password: string\n }\n export type SESSION_TYPE = 'ssh' | 'ftp' | 'sftp' | 'telnet' | 'webdav' | 'vnc' | 'serial' | 'shell'\n+\n export class ISession {\n   private id: string\n   name: string\n   type: SESSION_TYPE\n"
+                },
+                {
+                    "date": 1682595666985,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,18 @@\n   username: string\n   password: string\n }\n export type SESSION_TYPE = 'ssh' | 'ftp' | 'sftp' | 'telnet' | 'webdav' | 'vnc' | 'serial' | 'shell'\n-\n+export const sessionTypes: Record<SESSION_TYPE, string> = {\n+  ssh: 'ssh',\n+  ftp: 'ftp',\n+  sftp: 'sftp',\n+  telnet: 'telnet',\n+  webdav: 'webdav',\n+  vnc: 'vnc',\n+  serial: 'v',\n+  shell: 'shell'\n+}\n export class ISession {\n   private id: string\n   name: string\n   type: SESSION_TYPE\n"
+                },
+                {
+                    "date": 1682595743121,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,16 +3,16 @@\n   username: string\n   password: string\n }\n export type SESSION_TYPE = 'ssh' | 'ftp' | 'sftp' | 'telnet' | 'webdav' | 'vnc' | 'serial' | 'shell'\n-export const sessionTypes: Record<SESSION_TYPE, string> = {\n+export const sessionTypes: Record<SESSION_TYPE, SESSION_TYPE> = {\n   ssh: 'ssh',\n   ftp: 'ftp',\n   sftp: 'sftp',\n   telnet: 'telnet',\n   webdav: 'webdav',\n   vnc: 'vnc',\n-  serial: 'v',\n+  serial: 'serial',\n   shell: 'shell'\n }\n export class ISession {\n   private id: string\n"
+                },
+                {
+                    "date": 1682596143208,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n   /**\n    * 获取会话ID\n    * @returns 会话ID\n    */\n-  getSessionId() {\n+  getSessionId(): string {\n     return this.id\n   }\n \n   connect() {}\n"
+                }
+            ],
+            "date": 1682591633596,
+            "name": "Commit-0",
+            "content": "class BaseSession {\r\n  constructor(options) {}\r\n\r\n  connect() {}\r\n\r\n  disconnect() {}\r\n\r\n  attachTo(container) {}\r\n}\r\n"
+        }
+    ]
+}

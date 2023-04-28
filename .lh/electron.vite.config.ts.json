@@ -1,0 +1,18 @@
+{
+    "sourceFile": "electron.vite.config.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1682670983410,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1682670983410,
+            "name": "Commit-0",
+            "content": "import { resolve } from 'path'\nimport { defineConfig, externalizeDepsPlugin } from 'electron-vite'\nimport vue from '@vitejs/plugin-vue'\nimport AutoImport from 'unplugin-auto-import/vite'\nimport Components from 'unplugin-vue-components/vite'\nimport { NaiveUiResolver } from 'unplugin-vue-components/resolvers'\n\nexport default defineConfig({\n  main: {\n    plugins: [externalizeDepsPlugin()]\n  },\n  preload: {\n    plugins: [externalizeDepsPlugin()]\n  },\n  renderer: {\n    resolve: {\n      alias: {\n        '@renderer': resolve('src/renderer/src')\n      }\n    },\n    plugins: [\n      vue(),\n      AutoImport({\n        imports: [\n          'vue',\n          {\n            'naive-ui': ['useDialog', 'useMessage', 'useNotification', 'useLoadingBar']\n          }\n        ]\n      }),\n      Components({\n        resolvers: [NaiveUiResolver()]\n      })\n    ]\n  }\n})\n"
+        }
+    ]
+}

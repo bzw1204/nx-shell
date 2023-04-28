@@ -1,0 +1,22 @@
+{
+    "sourceFile": ".editorconfig",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1682591663926,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1682591760280,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,7 +3,7 @@\n [*]\r\n charset = utf-8\r\n indent_style = space\r\n indent_size = 2\r\n-end_of_line = crlf\r\n+end_of_line = lf\r\n insert_final_newline = true\r\n trim_trailing_whitespace = true\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1682591663926,
+            "name": "Commit-0",
+            "content": "root = true\r\n\r\n[*]\r\ncharset = utf-8\r\nindent_style = space\r\nindent_size = 2\r\nend_of_line = crlf\r\ninsert_final_newline = true\r\ntrim_trailing_whitespace = true"
+        }
+    ]
+}

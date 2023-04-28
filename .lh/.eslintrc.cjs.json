@@ -1,0 +1,42 @@
+{
+    "sourceFile": ".eslintrc.cjs",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 6,
+            "patches": [
+                {
+                    "date": 1682591718404,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1682591791057,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,5 +30,4 @@\n       }\n     }\n   ]\n }\n-\n"
+                },
+                {
+                    "date": 1682591797744,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,33 +1,33 @@\n-/* eslint-env node */\n-require('@rushstack/eslint-patch/modern-module-resolution')\n-\n-module.exports = {\n-  root: true,\n-  env: {\n-    browser: true,\n-    commonjs: true,\n-    es6: true,\n-    node: true,\n-    'vue/setup-compiler-macros': true\n-  },\n-  extends: ['plugin:vue/vue3-recommended', 'eslint:recommended', '@vue/eslint-config-typescript/recommended', '@vue/eslint-config-prettier'],\n-  rules: {\n-    '@typescript-eslint/ban-ts-comment': ['error', { 'ts-ignore': 'allow-with-description' }],\n-    '@typescript-eslint/explicit-function-return-type': 'error',\n-    '@typescript-eslint/explicit-module-boundary-types': 'off',\n-    '@typescript-eslint/no-empty-function': ['error', { allow: ['arrowFunctions'] }],\n-    '@typescript-eslint/no-explicit-any': 'error',\n-    '@typescript-eslint/no-non-null-assertion': 'off',\n-    '@typescript-eslint/no-var-requires': 'off',\n-    'vue/require-default-prop': 'off',\n-    'vue/multi-word-component-names': 'off'\n-  },\n-  overrides: [\n-    {\n-      files: ['*.js'],\n-      rules: {\n-        '@typescript-eslint/explicit-function-return-type': 'off'\n-      }\n-    }\n-  ]\n-}\n+/* eslint-env node */\r\n+require('@rushstack/eslint-patch/modern-module-resolution')\r\n+\r\n+module.exports = {\r\n+  root: true,\r\n+  env: {\r\n+    browser: true,\r\n+    commonjs: true,\r\n+    es6: true,\r\n+    node: true,\r\n+    'vue/setup-compiler-macros': true\r\n+  },\r\n+  extends: ['plugin:vue/vue3-recommended', 'eslint:recommended', '@vue/eslint-config-typescript/recommended', '@vue/eslint-config-prettier'],\r\n+  rules: {\r\n+    '@typescript-eslint/ban-ts-comment': ['error', { 'ts-ignore': 'allow-with-description' }],\r\n+    '@typescript-eslint/explicit-function-return-type': 'error',\r\n+    '@typescript-eslint/explicit-module-boundary-types': 'off',\r\n+    '@typescript-eslint/no-empty-function': ['error', { allow: ['arrowFunctions'] }],\r\n+    '@typescript-eslint/no-explicit-any': 'error',\r\n+    '@typescript-eslint/no-non-null-assertion': 'off',\r\n+    '@typescript-eslint/no-var-requires': 'off',\r\n+    'vue/require-default-prop': 'off',\r\n+    'vue/multi-word-component-names': 'off'\r\n+  },\r\n+  overrides: [\r\n+    {\r\n+      files: ['*.js'],\r\n+      rules: {\r\n+        '@typescript-eslint/explicit-function-return-type': 'off'\r\n+      }\r\n+    }\r\n+  ]\r\n+}\r\n"
+                },
+                {
+                    "date": 1682591820946,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,14 @@\n     es6: true,\r\n     node: true,\r\n     'vue/setup-compiler-macros': true\r\n   },\r\n-  extends: ['plugin:vue/vue3-recommended', 'eslint:recommended', '@vue/eslint-config-typescript/recommended', '@vue/eslint-config-prettier'],\r\n+  extends: [\r\n+    'plugin:vue/vue3-recommended',\r\n+    'eslint:recommended',\r\n+    '@vue/eslint-config-typescript/recommended',\r\n+    '@vue/eslint-config-prettier'\r\n+  ],\r\n   rules: {\r\n     '@typescript-eslint/ban-ts-comment': ['error', { 'ts-ignore': 'allow-with-description' }],\r\n     '@typescript-eslint/explicit-function-return-type': 'error',\r\n     '@typescript-eslint/explicit-module-boundary-types': 'off',\r\n"
+                },
+                {
+                    "date": 1682592335600,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   rules: {\r\n     '@typescript-eslint/ban-ts-comment': ['error', { 'ts-ignore': 'allow-with-description' }],\r\n     '@typescript-eslint/explicit-function-return-type': 'error',\r\n     '@typescript-eslint/explicit-module-boundary-types': 'off',\r\n-    '@typescript-eslint/no-empty-function': ['error', { allow: ['arrowFunctions'] }],\r\n+    '@typescript-eslint/no-empty-function': ['off', { allow: ['arrowFunctions'] }],\r\n     '@typescript-eslint/no-explicit-any': 'error',\r\n     '@typescript-eslint/no-non-null-assertion': 'off',\r\n     '@typescript-eslint/no-var-requires': 'off',\r\n     'vue/require-default-prop': 'off',\r\n"
+                },
+                {
+                    "date": 1682592349930,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   rules: {\r\n     '@typescript-eslint/ban-ts-comment': ['error', { 'ts-ignore': 'allow-with-description' }],\r\n     '@typescript-eslint/explicit-function-return-type': 'error',\r\n     '@typescript-eslint/explicit-module-boundary-types': 'off',\r\n-    '@typescript-eslint/no-empty-function': ['off', { allow: ['arrowFunctions'] }],\r\n+    '@typescript-eslint/no-empty-function': 'off',\r\n     '@typescript-eslint/no-explicit-any': 'error',\r\n     '@typescript-eslint/no-non-null-assertion': 'off',\r\n     '@typescript-eslint/no-var-requires': 'off',\r\n     'vue/require-default-prop': 'off',\r\n"
+                },
+                {
+                    "date": 1682592375334,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n     '@vue/eslint-config-prettier'\r\n   ],\r\n   rules: {\r\n     '@typescript-eslint/ban-ts-comment': ['error', { 'ts-ignore': 'allow-with-description' }],\r\n-    '@typescript-eslint/explicit-function-return-type': 'error',\r\n+    '@typescript-eslint/explicit-function-return-type': 'off',\r\n     '@typescript-eslint/explicit-module-boundary-types': 'off',\r\n     '@typescript-eslint/no-empty-function': 'off',\r\n     '@typescript-eslint/no-explicit-any': 'error',\r\n     '@typescript-eslint/no-non-null-assertion': 'off',\r\n"
+                }
+            ],
+            "date": 1682591718404,
+            "name": "Commit-0",
+            "content": "/* eslint-env node */\nrequire('@rushstack/eslint-patch/modern-module-resolution')\n\nmodule.exports = {\n  root: true,\n  env: {\n    browser: true,\n    commonjs: true,\n    es6: true,\n    node: true,\n    'vue/setup-compiler-macros': true\n  },\n  extends: ['plugin:vue/vue3-recommended', 'eslint:recommended', '@vue/eslint-config-typescript/recommended', '@vue/eslint-config-prettier'],\n  rules: {\n    '@typescript-eslint/ban-ts-comment': ['error', { 'ts-ignore': 'allow-with-description' }],\n    '@typescript-eslint/explicit-function-return-type': 'error',\n    '@typescript-eslint/explicit-module-boundary-types': 'off',\n    '@typescript-eslint/no-empty-function': ['error', { allow: ['arrowFunctions'] }],\n    '@typescript-eslint/no-explicit-any': 'error',\n    '@typescript-eslint/no-non-null-assertion': 'off',\n    '@typescript-eslint/no-var-requires': 'off',\n    'vue/require-default-prop': 'off',\n    'vue/multi-word-component-names': 'off'\n  },\n  overrides: [\n    {\n      files: ['*.js'],\n      rules: {\n        '@typescript-eslint/explicit-function-return-type': 'off'\n      }\n    }\n  ]\n}\n\n"
+        }
+    ]
+}
