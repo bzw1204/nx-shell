@@ -3,11 +3,19 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1682670983410,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1682677433237,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n import vue from '@vitejs/plugin-vue'\n import AutoImport from 'unplugin-auto-import/vite'\n import Components from 'unplugin-vue-components/vite'\n import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'\n+import vueSetupExtend from 'vite-plugin-vue-setup-extend'\n \n export default defineConfig({\n   main: {\n     plugins: [externalizeDepsPlugin()]\n@@ -19,8 +20,9 @@\n       }\n     },\n     plugins: [\n       vue(),\n+      vueSetupExtend(),\n       AutoImport({\n         imports: [\n           'vue',\n           {\n"
+                },
+                {
+                    "date": 1682677618165,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,9 @@\n import AutoImport from 'unplugin-auto-import/vite'\n import Components from 'unplugin-vue-components/vite'\n import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'\n import vueSetupExtend from 'vite-plugin-vue-setup-extend'\n+import WindiCSS from 'vite-plugin-windicss'\n \n export default defineConfig({\n   main: {\n     plugins: [externalizeDepsPlugin()]\n@@ -20,8 +21,9 @@\n       }\n     },\n     plugins: [\n       vue(),\n+      WindiCSS(),\n       vueSetupExtend(),\n       AutoImport({\n         imports: [\n           'vue',\n"
                 }
             ],
             "date": 1682670983410,

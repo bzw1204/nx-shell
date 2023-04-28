@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/renderer/src/main.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1682677625557,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1682677625557,
+            "name": "Commit-0",
+            "content": "import 'virtual:windi.css'\nimport { createApp } from 'vue'\nimport App from './App.vue'\n\ncreateApp(App).mount('#app')\n"
+        }
+    ]
+}

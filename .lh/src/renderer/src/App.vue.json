@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1682671004321,
@@ -16,6 +16,14 @@
                 {
                     "date": 1682671102526,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,7 +3,10 @@\n     <app />\n   </n-config-provider>\n </template>\n \n-<script setup lang=\"ts\"></script>\n+<script setup lang=\"ts\">\n+import { NConfigProvider } from 'naive-ui'\n+import { zhCN, dateZhCN } from 'naive-ui'\n+</script>\n \n <style scoped></style>\n"
+                },
+                {
+                    "date": 1682677286154,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,27 @@\n <template>\n   <n-config-provider :locale=\"zhCN\" :date-locale=\"dateZhCN\">\n-    <app />\n+    <n-space>\n+    <n-button>Default</n-button>\n+    <n-button type=\"tertiary\">\n+      Tertiary\n+    </n-button>\n+    <n-button type=\"primary\">\n+      Primary\n+    </n-button>\n+    <n-button type=\"info\">\n+      Info\n+    </n-button>\n+    <n-button type=\"success\">\n+      Success\n+    </n-button>\n+    <n-button type=\"warning\">\n+      Warning\n+    </n-button>\n+    <n-button type=\"error\">\n+      Error\n+    </n-button>\n+  </n-space>\n   </n-config-provider>\n </template>\n \n <script setup lang=\"ts\">\n"
+                },
+                {
+                    "date": 1682677310696,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,27 +1,7 @@\n <template>\n   <n-config-provider :locale=\"zhCN\" :date-locale=\"dateZhCN\">\n-    <n-space>\n-    <n-button>Default</n-button>\n-    <n-button type=\"tertiary\">\n-      Tertiary\n-    </n-button>\n-    <n-button type=\"primary\">\n-      Primary\n-    </n-button>\n-    <n-button type=\"info\">\n-      Info\n-    </n-button>\n-    <n-button type=\"success\">\n-      Success\n-    </n-button>\n-    <n-button type=\"warning\">\n-      Warning\n-    </n-button>\n-    <n-button type=\"error\">\n-      Error\n-    </n-button>\n-  </n-space>\n+    <router-view></router-view>\n   </n-config-provider>\n </template>\n \n <script setup lang=\"ts\">\n"
                 }
             ],
             "date": 1682671004321,

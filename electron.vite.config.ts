@@ -4,6 +4,8 @@ import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
+import vueSetupExtend from 'vite-plugin-vue-setup-extend'
+import WindiCSS from 'vite-plugin-windicss'
 
 export default defineConfig({
   main: {
@@ -20,6 +22,8 @@ export default defineConfig({
     },
     plugins: [
       vue(),
+      WindiCSS(),
+      vueSetupExtend(),
       AutoImport({
         imports: [
           'vue',

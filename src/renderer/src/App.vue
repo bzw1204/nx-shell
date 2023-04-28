@@ -1,6 +1,6 @@
 <template>
   <n-config-provider :locale="zhCN" :date-locale="dateZhCN">
-    <app />
+    <router-view></router-view>
   </n-config-provider>
 </template>
 

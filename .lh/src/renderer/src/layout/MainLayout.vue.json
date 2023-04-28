@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/renderer/src/layout/MainLayout.vue",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1682677404550,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1682677443132,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,7 @@\n-<template>\r\n-  <div>\r\n-\r\n-  </div>\r\n-</template>\r\n-\r\n-<script setup lang=\"ts\" name=\"MainLayout\">\r\n-\r\n-</script>\r\n-\r\n-<style scoped>\r\n-\r\n-</style>\n\\ No newline at end of file\n+<template>\n+  <div></div>\n+</template>\n+\n+<script setup lang=\"ts\" name=\"MainLayout\"></script>\n+\n+<style scoped></style>\n"
+                },
+                {
+                    "date": 1682677552257,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,13 @@\n <template>\n-  <div></div>\n+  <n-layout has-sider>\n+    <n-layout-sider content-style=\"padding: 24px;\"> 海淀桥 </n-layout-sider>\n+    <n-layout>\n+      <n-layout-header>颐和园路</n-layout-header>\n+      <n-layout-content content-style=\"padding: 24px;\"> 平山道 </n-layout-content>\n+      <n-layout-footer>成府路</n-layout-footer>\n+    </n-layout>\n+  </n-layout>\n </template>\n \n <script setup lang=\"ts\" name=\"MainLayout\"></script>\n \n"
+                }
+            ],
+            "date": 1682677404550,
+            "name": "Commit-0",
+            "content": "<template>\r\n  <div>\r\n\r\n  </div>\r\n</template>\r\n\r\n<script setup lang=\"ts\" name=\"MainLayout\">\r\n\r\n</script>\r\n\r\n<style scoped>\r\n\r\n</style>"
+        }
+    ]
+}
