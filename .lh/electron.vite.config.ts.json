@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1682670983410,
@@ -16,6 +16,30 @@
                 {
                     "date": 1682677618165,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,9 @@\n import AutoImport from 'unplugin-auto-import/vite'\n import Components from 'unplugin-vue-components/vite'\n import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'\n import vueSetupExtend from 'vite-plugin-vue-setup-extend'\n+import WindiCSS from 'vite-plugin-windicss'\n \n export default defineConfig({\n   main: {\n     plugins: [externalizeDepsPlugin()]\n@@ -20,8 +21,9 @@\n       }\n     },\n     plugins: [\n       vue(),\n+      WindiCSS(),\n       vueSetupExtend(),\n       AutoImport({\n         imports: [\n           'vue',\n"
+                },
+                {
+                    "date": 1683255835149,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,8 +24,15 @@\n       vue(),\n       WindiCSS(),\n       vueSetupExtend(),\n       AutoImport({\n+        dts: 'src/renderer/types/auto-imports.d.ts',\n+        include: [\n+          /\\.[tj]sx?$/, // .ts, .tsx, .js, .jsx\n+          /\\.vue$/,\n+          /\\.vue\\?vue/, // .vue\n+          /\\.md$/ // .md\n+        ],\n         imports: [\n           'vue',\n           {\n             'naive-ui': ['useDialog', 'useMessage', 'useNotification', 'useLoadingBar']\n"
+                },
+                {
+                    "date": 1683255863247,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,10 @@\n           'vue',\n           {\n             'naive-ui': ['useDialog', 'useMessage', 'useNotification', 'useLoadingBar']\n           }\n-        ]\n+        ],\n+        resolvers: [NaiveUiResolver()]\n       }),\n       Components({\n         resolvers: [NaiveUiResolver()]\n       })\n"
+                },
+                {
+                    "date": 1683255875490,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,8 +33,10 @@\n           /\\.md$/ // .md\n         ],\n         imports: [\n           'vue',\n+          'vue-router',\n+          'pinia',\n           {\n             'naive-ui': ['useDialog', 'useMessage', 'useNotification', 'useLoadingBar']\n           }\n         ],\n"
+                },
+                {
+                    "date": 1683255913252,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,8 +42,9 @@\n         ],\n         resolvers: [NaiveUiResolver()]\n       }),\n       Components({\n+        dts: 'src/renderer/types/components.d.ts',\n         resolvers: [NaiveUiResolver()]\n       })\n     ]\n   }\n"
+                },
+                {
+                    "date": 1683256643662,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,17 +31,22 @@\n           /\\.vue$/,\n           /\\.vue\\?vue/, // .vue\n           /\\.md$/ // .md\n         ],\n+        resolvers: [NaiveUiResolver()],\n         imports: [\n           'vue',\n           'vue-router',\n           'pinia',\n           {\n             'naive-ui': ['useDialog', 'useMessage', 'useNotification', 'useLoadingBar']\n           }\n         ],\n-        resolvers: [NaiveUiResolver()]\n+        eslintrc: {\n+          enabled: true, // Default `false`\n+          filepath: 'src/renderer/types/auto-imports.json', // Default `./.eslintrc-auto-import.json`\n+          globalsPropValue: true // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')\n+        }\n       }),\n       Components({\n         dts: 'src/renderer/types/components.d.ts',\n         resolvers: [NaiveUiResolver()]\n"
+                },
+                {
+                    "date": 1683256754969,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n       vue(),\n       WindiCSS(),\n       vueSetupExtend(),\n       AutoImport({\n-        dts: 'src/renderer/types/auto-imports.d.ts',\n+        dts: 'src/renderer/src/types/auto-imports.d.ts',\n         include: [\n           /\\.[tj]sx?$/, // .ts, .tsx, .js, .jsx\n           /\\.vue$/,\n           /\\.vue\\?vue/, // .vue\n@@ -42,14 +42,14 @@\n           }\n         ],\n         eslintrc: {\n           enabled: true, // Default `false`\n-          filepath: 'src/renderer/types/auto-imports.json', // Default `./.eslintrc-auto-import.json`\n+          filepath: 'src/renderer/src/types/auto-imports.json', // Default `./.eslintrc-auto-import.json`\n           globalsPropValue: true // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')\n         }\n       }),\n       Components({\n-        dts: 'src/renderer/types/components.d.ts',\n+        dts: 'src/renderer/src/types/components.d.ts',\n         resolvers: [NaiveUiResolver()]\n       })\n     ]\n   }\n"
                 }
             ],
             "date": 1682670983410,

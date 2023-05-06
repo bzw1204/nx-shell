@@ -1,8 +1,22 @@
-import { contextBridge } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
 // Custom APIs for renderer
-const api = {}
+const api: IApi = {
+  platform: process.platform
+}
+
+const tools: ITools = {
+  toggleMaximize: async function (): Promise<boolean> {
+    return await ipcRenderer.invoke('toggleMaximize')
+  },
+  minimize: async function (): Promise<void> {
+    await ipcRenderer.invoke('minimize')
+  },
+  close: async function (): Promise<void> {
+    await ipcRenderer.invoke('close')
+  }
+}
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
@@ -11,12 +25,12 @@ if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld('electron', electronAPI)
     contextBridge.exposeInMainWorld('api', api)
+    contextBridge.exposeInMainWorld('tools', tools)
   } catch (error) {
     console.error(error)
   }
 } else {
-  // @ts-ignore (define in dts)
   window.electron = electronAPI
-  // @ts-ignore (define in dts)
   window.api = api
+  window.tools = tools
 }

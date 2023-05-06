@@ -3,11 +3,19 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1682677625557,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1683172130984,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,7 @@\n import 'virtual:windi.css'\n import { createApp } from 'vue'\n+import router from './router'\n+import pinia from './store/pinia'\n import App from './App.vue'\n \n createApp(App).mount('#app')\n"
+                },
+                {
+                    "date": 1683172157609,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,10 @@\n import 'virtual:windi.css'\n import { createApp } from 'vue'\n+import App from './App.vue'\n import router from './router'\n import pinia from './store/pinia'\n-import App from './App.vue'\n \n-createApp(App).mount('#app')\n+const app = createApp(App)\n+app.use(router)\n+app.use(pinia)\n+app.mount('#app')\n"
                 }
             ],
             "date": 1682677625557,

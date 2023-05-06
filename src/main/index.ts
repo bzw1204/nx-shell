@@ -1,6 +1,6 @@
-import { app, shell, BrowserWindow } from 'electron'
+import { electronApp, is, optimizer } from '@electron-toolkit/utils'
+import { BrowserWindow, app, shell, ipcMain } from 'electron'
 import { join } from 'path'
-import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 
 function createWindow(): void {
@@ -9,7 +9,8 @@ function createWindow(): void {
     width: 900,
     height: 670,
     show: false,
-    autoHideMenuBar: true,
+    frame: false,
+    titleBarStyle: 'hidden',
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
@@ -20,6 +21,16 @@ function createWindow(): void {
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
   })
+
+  // 屏蔽F11快捷键
+  mainWindow.webContents.on('before-input-event', (event, input) => {
+    if (input.key === 'F11') {
+      event.preventDefault()
+    }
+  })
+
+  // 发送窗口最大化事件
+  mainWindow.on('maximize', () => {})
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
@@ -33,6 +44,22 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
+  // 窗口最大化/重置事件
+  ipcMain.handle('toggleMaximize', () => {
+    const isMaximized = mainWindow.isMaximized()
+    mainWindow[!isMaximized ? 'maximize' : 'restore']()
+    return !isMaximized
+  })
+  // 窗口最小化事件
+  ipcMain.handle('minimize', () => {
+    const isMinimized = mainWindow.isMinimized()
+    !isMinimized && mainWindow.minimize()
+  })
+
+  // 窗口关闭事件
+  ipcMain.handle('close', () => {
+    mainWindow.close()
+  })
 }
 
 // This method will be called when Electron has finished
@@ -40,7 +67,7 @@ function createWindow(): void {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   // Set app user model id for windows
-  electronApp.setAppUserModelId('com.electron')
+  electronApp.setAppUserModelId('com.nxshell')
 
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.
