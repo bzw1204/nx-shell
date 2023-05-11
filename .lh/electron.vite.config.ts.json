@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 10,
             "patches": [
                 {
                     "date": 1682670983410,
@@ -40,6 +40,14 @@
                 {
                     "date": 1683256754969,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n       vue(),\n       WindiCSS(),\n       vueSetupExtend(),\n       AutoImport({\n-        dts: 'src/renderer/types/auto-imports.d.ts',\n+        dts: 'src/renderer/src/types/auto-imports.d.ts',\n         include: [\n           /\\.[tj]sx?$/, // .ts, .tsx, .js, .jsx\n           /\\.vue$/,\n           /\\.vue\\?vue/, // .vue\n@@ -42,14 +42,14 @@\n           }\n         ],\n         eslintrc: {\n           enabled: true, // Default `false`\n-          filepath: 'src/renderer/types/auto-imports.json', // Default `./.eslintrc-auto-import.json`\n+          filepath: 'src/renderer/src/types/auto-imports.json', // Default `./.eslintrc-auto-import.json`\n           globalsPropValue: true // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')\n         }\n       }),\n       Components({\n-        dts: 'src/renderer/types/components.d.ts',\n+        dts: 'src/renderer/src/types/components.d.ts',\n         resolvers: [NaiveUiResolver()]\n       })\n     ]\n   }\n"
+                },
+                {
+                    "date": 1683346860159,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n       vue(),\n       WindiCSS(),\n       vueSetupExtend(),\n       AutoImport({\n-        dts: 'src/renderer/src/types/auto-imports.d.ts',\n+        dts: 'src/types/auto-imports.d.ts',\n         include: [\n           /\\.[tj]sx?$/, // .ts, .tsx, .js, .jsx\n           /\\.vue$/,\n           /\\.vue\\?vue/, // .vue\n@@ -42,14 +42,14 @@\n           }\n         ],\n         eslintrc: {\n           enabled: true, // Default `false`\n-          filepath: 'src/renderer/src/types/auto-imports.json', // Default `./.eslintrc-auto-import.json`\n+          filepath: 'src/types/auto-imports.json', // Default `./.eslintrc-auto-import.json`\n           globalsPropValue: true // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')\n         }\n       }),\n       Components({\n-        dts: 'src/renderer/src/types/components.d.ts',\n+        dts: 'src/types/components.d.ts',\n         resolvers: [NaiveUiResolver()]\n       })\n     ]\n   }\n"
+                },
+                {
+                    "date": 1683346928689,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n           }\n         ],\n         eslintrc: {\n           enabled: true, // Default `false`\n-          filepath: 'src/types/auto-imports.json', // Default `./.eslintrc-auto-import.json`\n+          filepath: './auto-imports.json', // Default `./.eslintrc-auto-import.json`\n           globalsPropValue: true // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')\n         }\n       }),\n       Components({\n"
                 }
             ],
             "date": 1682670983410,

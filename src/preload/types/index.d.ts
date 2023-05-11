@@ -5,6 +5,9 @@ declare global {
     toggleMaximize: () => Promise<boolean>
     minimize: () => Promise<void>
     close: () => Promise<void>
+    getGist: (token, gistId) => Promise<any>
+    createGist: (token, options) => Promise<any>
+    updateGist: (token, gistId, files) => Promise<any>
   }
   interface IApi {
     platform: Platform

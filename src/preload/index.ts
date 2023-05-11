@@ -1,5 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
+import { getGist, createGist, updateGist } from './gist'
 
 // Custom APIs for renderer
 const api: IApi = {
@@ -15,7 +16,10 @@ const tools: ITools = {
   },
   close: async function (): Promise<void> {
     await ipcRenderer.invoke('close')
-  }
+  },
+  getGist,
+  createGist,
+  updateGist
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
@@ -34,3 +38,6 @@ if (process.contextIsolated) {
   window.api = api
   window.tools = tools
 }
+ipcRenderer.on('test-send', (_event, arg) => {
+  console.log(arg)
+})

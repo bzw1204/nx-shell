@@ -25,7 +25,7 @@ export default defineConfig({
       WindiCSS(),
       vueSetupExtend(),
       AutoImport({
-        dts: 'src/renderer/src/types/auto-imports.d.ts',
+        dts: 'src/types/auto-imports.d.ts',
         include: [
           /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
           /\.vue$/,
@@ -43,12 +43,12 @@ export default defineConfig({
         ],
         eslintrc: {
           enabled: true, // Default `false`
-          filepath: 'src/renderer/src/types/auto-imports.json', // Default `./.eslintrc-auto-import.json`
+          filepath: './auto-imports.json', // Default `./.eslintrc-auto-import.json`
           globalsPropValue: true // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
         }
       }),
       Components({
-        dts: 'src/renderer/src/types/components.d.ts',
+        dts: 'src/types/components.d.ts',
         resolvers: [NaiveUiResolver()]
       })
     ]
