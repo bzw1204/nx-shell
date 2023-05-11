@@ -20,7 +20,7 @@ function createWindow(): void {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
-    mainWindow.webContents.send('test-send', 'hello,main workder')
+    mainWindow.webContents.send('test-send', 'hello,main')
   })
 
   // 屏蔽F11快捷键
