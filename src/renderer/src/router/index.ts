@@ -1,4 +1,4 @@
-import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
+import { RouteRecordRaw, createRouter, createWebHashHistory } from 'vue-router'
 import MainLayout from '@renderer/layout/MainLayout.vue'
 
 const root: RouteRecordRaw[] = [
@@ -12,13 +12,18 @@ const root: RouteRecordRaw[] = [
         path: 'home',
         name: 'Home',
         component: () => import('@renderer/views/Home.vue')
+      },
+      {
+        path: 'explorer',
+        name: 'Explorer',
+        component: () => import('@renderer/views/explorer/index.vue')
       }
     ]
   }
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes: [...root]
 })
 

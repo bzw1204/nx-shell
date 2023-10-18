@@ -1,11 +1,14 @@
-import { resolve } from 'path'
-import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
 import vue from '@vitejs/plugin-vue'
+import VueJsx from '@vitejs/plugin-vue-jsx'
+import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
+import { resolve } from 'path'
 import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
+import Components from 'unplugin-vue-components/vite'
 import vueSetupExtend from 'vite-plugin-vue-setup-extend'
 import WindiCSS from 'vite-plugin-windicss'
+// @ts-ignore
+import { XNaiveUIResolver } from '@skit/x.naive-ui/unplugin'
 
 export default defineConfig({
   main: {
@@ -15,6 +18,9 @@ export default defineConfig({
     plugins: [externalizeDepsPlugin()]
   },
   renderer: {
+    server: {
+      port: 6630
+    },
     resolve: {
       alias: {
         '@renderer': resolve('src/renderer/src')
@@ -23,6 +29,7 @@ export default defineConfig({
     plugins: [
       vue(),
       WindiCSS(),
+      VueJsx(),
       vueSetupExtend(),
       AutoImport({
         dts: 'src/types/auto-imports.d.ts',
@@ -49,7 +56,7 @@ export default defineConfig({
       }),
       Components({
         dts: 'src/types/components.d.ts',
-        resolvers: [NaiveUiResolver()]
+        resolvers: [NaiveUiResolver(), XNaiveUIResolver()]
       })
     ]
   }

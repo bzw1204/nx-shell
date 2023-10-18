@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 10,
+            "activePatchIndex": 11,
             "patches": [
                 {
                     "date": 1682670983410,
@@ -48,6 +48,10 @@
                 {
                     "date": 1683346928689,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n           }\n         ],\n         eslintrc: {\n           enabled: true, // Default `false`\n-          filepath: 'src/types/auto-imports.json', // Default `./.eslintrc-auto-import.json`\n+          filepath: './auto-imports.json', // Default `./.eslintrc-auto-import.json`\n           globalsPropValue: true // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')\n         }\n       }),\n       Components({\n"
+                },
+                {
+                    "date": 1692617736536,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,56 @@\n+import vue from '@vitejs/plugin-vue'\n+import { defineConfig, externalizeDepsPlugin } from 'electron-vite'\n+import { resolve } from 'path'\n+import AutoImport from 'unplugin-auto-import/vite'\n+import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'\n+import Components from 'unplugin-vue-components/vite'\n+import vueSetupExtend from 'vite-plugin-vue-setup-extend'\n+import WindiCSS from 'vite-plugin-windicss'\n+\n+export default defineConfig({\n+  main: {\n+    plugins: [externalizeDepsPlugin()]\n+  },\n+  preload: {\n+    plugins: [externalizeDepsPlugin()]\n+  },\n+  renderer: {\n+    resolve: {\n+      alias: {\n+        '@renderer': resolve('src/renderer/src')\n+      }\n+    },\n+    plugins: [\n+      vue(),\n+      WindiCSS(),\n+      vueSetupExtend(),\n+      AutoImport({\n+        dts: 'src/types/auto-imports.d.ts',\n+        include: [\n+          /\\.[tj]sx?$/, // .ts, .tsx, .js, .jsx\n+          /\\.vue$/,\n+          /\\.vue\\?vue/, // .vue\n+          /\\.md$/ // .md\n+        ],\n+        resolvers: [NaiveUiResolver()],\n+        imports: [\n+          'vue',\n+          'vue-router',\n+          'pinia',\n+          {\n+            'naive-ui': ['useDialog', 'useMessage', 'useNotification', 'useLoadingBar']\n+          }\n+        ],\n+        eslintrc: {\n+          enabled: true, // Default `false`\n+          filepath: './auto-imports.json', // Default `./.eslintrc-auto-import.json`\n+          globalsPropValue: true // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')\n+        }\n+      }),\n+      Components({\n+        dts: 'src/types/components.d.ts',\n+        resolvers: [NaiveUiResolver()]\n+      })\n+    ]\n+  }\n+})\n"
                 }
             ],
             "date": 1682670983410,

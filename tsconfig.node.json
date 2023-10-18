@@ -3,9 +3,13 @@
   "include": [
     "electron.vite.config.*",
     "src/main/*",
+    "src/main/**/*.ts",
+    "src/main/**/*.d.ts",
     "src/preload/*",
     "src/preload/**/*.ts",
-    "src/preload/types/index.d.ts"
+    "src/preload/types/index.d.ts",
+    "src/types/*.ts",
+    "src/types/*.d.ts",
   ],
   "compilerOptions": {
     "composite": true,

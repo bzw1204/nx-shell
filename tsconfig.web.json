@@ -7,12 +7,19 @@
     "src/renderer/src/types/*.d.ts",
   ],
   "compilerOptions": {
+    "moduleResolution": "Bundler",
     "composite": true,
     "baseUrl": ".",
     "paths": {
       "@renderer/*": [
         "src/renderer/src/*"
       ]
-    }
-  }
+    },
+    "types": [
+      "@skit/x.naive-ui/types/volar.d.ts"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }
