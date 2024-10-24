@@ -1,62 +1,90 @@
+import { resolve } from 'node:path'
 import vue from '@vitejs/plugin-vue'
 import VueJsx from '@vitejs/plugin-vue-jsx'
 import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
-import { resolve } from 'path'
+import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
-import vueSetupExtend from 'vite-plugin-vue-setup-extend'
-import WindiCSS from 'vite-plugin-windicss'
-// @ts-ignore
-import { XNaiveUIResolver } from '@skit/x.naive-ui/unplugin'
+import VueSetupExtend from 'vite-plugin-vue-setup-extend'
 
 export default defineConfig({
   main: {
+    build: {
+      rollupOptions: {
+        input: {
+          index: resolve(__dirname, 'src-electron/index.ts')
+        },
+        output: {
+          format: 'es'
+        }
+      }
+    },
+    resolve: {
+      alias: {
+        '@': resolve('src-electron/')
+      }
+    },
     plugins: [externalizeDepsPlugin()]
   },
   preload: {
+    build: {
+      rollupOptions: {
+        input: {
+          index: resolve(__dirname, 'src-electron/preload/index.ts')
+        }
+      }
+    },
     plugins: [externalizeDepsPlugin()]
   },
   renderer: {
     server: {
-      port: 6630
+      port: 888
+    },
+    root: '.',
+    build: {
+      rollupOptions: {
+        input: {
+          index: resolve(__dirname, 'index.html')
+        }
+      }
     },
     resolve: {
       alias: {
-        '@renderer': resolve('src/renderer/src')
+        '@': resolve('src/')
       }
     },
     plugins: [
-      vue(),
-      WindiCSS(),
+      vue({
+        template: {
+          compilerOptions: {
+            isCustomElement: tag => ['title-bar'].includes(tag)
+          }
+        }
+      }),
       VueJsx(),
-      vueSetupExtend(),
+      UnoCSS(),
+      VueSetupExtend(),
       AutoImport({
-        dts: 'src/types/auto-imports.d.ts',
-        include: [
-          /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
-          /\.vue$/,
-          /\.vue\?vue/, // .vue
-          /\.md$/ // .md
-        ],
-        resolvers: [NaiveUiResolver()],
         imports: [
           'vue',
           'vue-router',
           'pinia',
           {
-            'naive-ui': ['useDialog', 'useMessage', 'useNotification', 'useLoadingBar']
+            'naive-ui': ['useDialog', 'useMessage', 'useNotification', 'useLoadingBar', 'useModal']
           }
         ],
-        eslintrc: {
-          enabled: true, // Default `false`
-          filepath: './auto-imports.json', // Default `./.eslintrc-auto-import.json`
-          globalsPropValue: true // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
-        }
+        dirs: ['src/store'],
+        include: [/\.[tj]sx?$/, /\.vue$/, /\.vue\?vue/],
+        dts: 'src/types/auto-imports.d.ts'
       }),
       Components({
         dts: 'src/types/components.d.ts',
-        resolvers: [NaiveUiResolver(), XNaiveUIResolver()]
+        include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+        resolvers: [
+          NaiveUiResolver()
+          // XNaiveUIResolver()
+        ]
       })
     ]
   }

@@ -1,6 +1,6 @@
-# nx-shell
+# NxShell
 
-An Electron application with Vue and TypeScript
+一款高颜值的SSH终端工具
 
 ## Recommended IDE Setup
 
