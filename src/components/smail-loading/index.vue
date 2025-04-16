@@ -1,117 +1,240 @@
 <script setup lang="ts" name="SmailLoading">
-import type { SmileSpinStatus } from 'smail-loading'
-import type { StatusColor } from './types'
-import { StatusColorMap } from './types'
-
-interface SmileSpinProps {
+interface Props {
   size?: number
-  loading?: boolean
-  status?: SmileSpinStatus
-  color?: string
-  statusColor?: StatusColor
-}
-const props = withDefaults(defineProps<SmileSpinProps>(), {
-  loading: false,
-  size: 50,
-  status: 'success',
-  color: '#0dcecb'
-})
-
-const { size, status, color } = toRefs(props)
-
-const styleVars = computed(() => {
-  return {
-    '--offset': '4px',
-    '--radius': `${size.value}px`,
-    '--radius-ab-w': `calc(${size.value / 2}px + var(--offset))`,
-    '--radius-ab-h': 'calc(var(--radius-ab-w) * 2)'
+  color?: {
+    success: string
+    error: string
+    loading: string
   }
-})
+  status?: 'success' | 'error' | 'loading'
+}
+const { size = 50, status = 'success', color } = defineProps<Props>()
+const defaultColor = {
+  success: '#36ad6a',
+  error: '#d03050',
+  loading: '#0dcecb'
+}
+const loading = computed(() => status === 'loading')
+
+// 添加状态颜色映射
+const containerStyle = computed(() => ({
+  '--size': `${size}px`,
+  '--color': (color || defaultColor)[status]
+}))
 </script>
 
 <template>
-  <div class="smile-spin" :class="{ spin: loading }" :style="styleVars">
-    <div
-      class="transition-colors"
-      :class="status === 'error' ? 'i-local-sad' : 'i-local-smile'"
-      :style="{
-        color: loading ? color : StatusColorMap[status],
-        fontSize: `${Math.floor(size * 0.8)}px`,
-      }"
-    />
+  <div
+    class="smile-loading-container"
+    :style="containerStyle"
+  >
+    <!-- 进度条 SVG -->
+    <svg
+      class="smile-loading-svg"
+      :class="{ 'is-loading': loading }"
+      viewBox="0 0 512 512"
+      xmlns="http://www.w3.org/2000/svg"
+      shape-rendering="geometricPrecision"
+    >
+      <!-- 背景圆环 -->
+      <circle
+        v-if="!loading"
+        class="circle-track"
+        cx="256"
+        cy="256"
+        r="204"
+        fill="none"
+        stroke-width="20"
+      />
+      <!-- 动态进度条 -->
+      <circle
+        class="path"
+        :class="{
+          'is-loading': loading,
+          'is-success': status === 'success',
+          'is-error': status === 'error',
+        }"
+        cx="256"
+        cy="256"
+        r="204"
+        fill="none"
+        stroke-width="20"
+      />
+    </svg>
+
+    <!-- 表情图标 SVG -->
+    <svg
+      class="smile-icon-svg"
+      viewBox="0 0 512 512"
+      xmlns="http://www.w3.org/2000/svg"
+      shape-rendering="geometricPrecision"
+    >
+      <g
+        class="smile-icon"
+        :class="{
+          'is-loading': loading,
+          'is-success': status === 'success',
+          'is-error': status === 'error',
+        }"
+        fill="none"
+      >
+        <!-- 脸部轮廓和眼睛 -->
+        <circle cx="256" cy="256" r="133" fill="var(--color)" class="face" />
+        <circle cx="205" cy="225" r="20" fill="var(--n-color)" class="eye" />
+        <circle cx="307" cy="225" r="20" fill="var(--n-color)" class="eye" />
+
+        <!-- 嘴巴 - 根据状态变化 -->
+        <path
+          v-if="status === 'success'"
+          d="M205,287 Q256,338 307,287"
+          stroke="var(--n-color)"
+          stroke-width="20"
+          stroke-linecap="round"
+          fill="none"
+          class="mouth"
+        />
+        <path
+          v-if="status === 'error'"
+          d="M205,307 Q256,266 307,307"
+          stroke="var(--n-color)"
+          stroke-width="20"
+          stroke-linecap="round"
+          fill="none"
+          class="mouth"
+        />
+        <path
+          v-if="status === 'loading'"
+          d="M205,297 L307,297"
+          stroke="var(--n-color)"
+          stroke-width="20"
+          stroke-linecap="round"
+          fill="none"
+          class="mouth"
+        />
+      </g>
+    </svg>
   </div>
 </template>
 
-<style lang="scss">
-.smile-spin {
+<style lang="scss" scoped>
+.smile-loading-container {
+  --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-duration: 0.3s;
+
   position: relative;
-  width: var(--radius);
-  height: var(--radius);
-  box-shadow: inset 0 0 0 2px v-bind(color);
-  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: transparent;
-  transition: box-shadow 0.3s ease;
+  width: var(--size);
+  height: var(--size);
 
-  &::before,
-  &::after {
-    content: '';
-    width: var(--radius-ab-w);
-    height: var(--radius-ab-h);
+  .smile-loading-svg {
     position: absolute;
-    background-color: var(--n-color, white);
-    transition: transform 0.3s ease;
-    top: calc(var(--offset) * -1);
-    transform: rotate(-180deg);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform var(--transition-duration) var(--transition-timing);
+    will-change: transform;
+
+    &.is-loading {
+      animation: container-rotate 3s linear infinite;
+    }
   }
 
-  &::before {
-    left: calc(var(--offset) * -1);
-    border-radius: var(--radius-ab-w) 0 0 var(--radius-ab-w);
-    transform-origin: var(--radius-ab-w) 50%;
+  .smile-icon-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
   }
 
-  &::after {
-    right: calc(var(--offset) * -1);
-    border-radius: 0 var(--radius-ab-w) var(--radius-ab-w) 0;
-    transform-origin: 0 50%;
+  .circle-track {
+    stroke: var(--color);
+    stroke-opacity: 0.2;
   }
 
-  & div {
-    z-index: 2;
-    transition:
-      transform 0.3s ease,
-      color 0.3s ease;
-    position: relative;
+  .path {
+    stroke: var(--color);
+    stroke-linecap: round;
+    stroke-width: 20;
+    fill: none;
+    transform-origin: center;
+    transition: all var(--transition-duration) var(--transition-timing);
+    will-change: stroke-dashoffset, stroke;
+    stroke-dasharray: 1282;
+    stroke-dashoffset: 0;
+
+    &.is-loading {
+      stroke-dasharray: 128, 1282;
+      animation: spinner-dash 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    &.is-success,
+    &.is-error {
+      stroke-dasharray: 1282;
+      stroke-dashoffset: 0;
+      animation: none;
+    }
+  }
+
+  .smile-icon {
+    transform-origin: center;
+    transition: all var(--transition-duration) var(--transition-timing);
+
+    &.is-loading {
+      opacity: 0.9;
+      transform: scale(0.95);
+    }
+
+    &.is-success {
+      transform: scale(1.05);
+    }
+
+    &.is-error {
+      transform: scale(0.95);
+    }
+
+    .face {
+      transition: transform var(--transition-duration) var(--transition-timing);
+    }
+
+    .eye {
+      transition: all var(--transition-duration) var(--transition-timing);
+    }
+
+    .mouth {
+      transition: all var(--transition-duration) var(--transition-timing);
+    }
+
+    circle,
+    path {
+      transform-origin: center;
+    }
   }
 }
 
-.spin {
-  &::before {
-    animation: spin-before 2s infinite cubic-bezier(0.42, 0, 0.58, 1);
-  }
-  &::after {
-    animation: spin-after 2s infinite cubic-bezier(0.42, 0, 0.58, 1) 0.5s;
+@keyframes container-rotate {
+  to {
+    transform: rotate(360deg);
   }
 }
 
-@keyframes spin-before {
+@keyframes spinner-dash {
   0% {
-    transform: rotate(-180deg);
+    stroke-dasharray: 128, 1282;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 855, 1282;
+    stroke-dashoffset: -500;
   }
   100% {
-    transform: rotate(180deg);
-  }
-}
-
-@keyframes spin-after {
-  0% {
-    transform: rotate(-180deg);
-  }
-  100% {
-    transform: rotate(180deg);
+    stroke-dasharray: 128, 1282;
+    stroke-dashoffset: -1282;
   }
 }
 </style>
