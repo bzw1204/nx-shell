@@ -30,15 +30,6 @@ export default defineComponent({
     }
   },
   render() {
-    // return h(NaiveProvider, {
-    //   showSpin: this.$data.showSpin
-    // }, () => [
-    //   // 只有当 show 为 true 时才渲染 NGlobalStyle
-    //   this.$props.showGlobalStyle ? h(NGlobalStyle) : null,
-    //   h(RegisterNaiveTools),
-    //   // 始终渲染默认插槽的内容
-    //   this.$slots.default?.()
-    // ])
     return (
       <NLoadingBarProvider>
         <NDialogProvider>

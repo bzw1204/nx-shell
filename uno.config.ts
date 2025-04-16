@@ -1,6 +1,6 @@
-import { defineConfig, presetAttributify, presetIcons, presetUno } from 'unocss'
-import presetRemToPx from '@unocss/preset-rem-to-px'
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
+import presetRemToPx from '@unocss/preset-rem-to-px'
+import { defineConfig, presetAttributify, presetIcons, presetUno } from 'unocss'
 
 export default defineConfig({
   presets: [

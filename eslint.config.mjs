@@ -17,7 +17,7 @@ export default antfu({
     'style/space-before-function-paren': ['error', 'never'],
     'array-bracket-newline': ['error', 'consistent'],
     // 允许使用 console.warn 和 console.error，但使用 console.log 警告
-    'no-console': ['warn', { allow: ['warn', 'error', 'group', 'info'] }],
+    'no-console': ['warn', { allow: ['warn', 'error', 'group', 'info', 'debug'] }],
     'style/max-statements-per-line': 0,
     'vue/max-attributes-per-line': ['error', { singleline: 6, multiline: 1 }],
     'vue/max-len': ['error', {

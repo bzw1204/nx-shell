@@ -1,7 +1,7 @@
+import type { IApi, IRendererStore } from 'preload'
 import { platform } from 'node:os'
 import { electronAPI } from '@electron-toolkit/preload'
 import { contextBridge } from 'electron'
-import type { IApi, IRendererStore } from 'preload'
 import { domReady, useLoading } from './loading'
 
 const { appendLoading, removeLoading } = useLoading()

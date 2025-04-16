@@ -1,9 +1,10 @@
 import { release } from 'node:os'
+import { createWindow } from '@/core/window-manager'
 import { electronApp, optimizer } from '@electron-toolkit/utils'
 import { useUIKit } from '@electron-uikit/core/main'
 import { registerTitleBarListener } from '@electron-uikit/titlebar'
-import { BrowserWindow, app } from 'electron'
-import { createWindow } from '@/core/window-manager'
+import { app, BrowserWindow } from 'electron'
+import logger from 'electron-log'
 
 // 关闭安全提示
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true'
@@ -16,7 +17,7 @@ if (release().startsWith('6.1')) {
 }
 
 app.whenReady().then(async() => {
-  electronApp.setAppUserModelId('com.electron')
+  electronApp.setAppUserModelId('com.github.bzw1204.nxshell')
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
   })
@@ -37,10 +38,7 @@ app.on('window-all-closed', () => {
   }
 })
 
-process.on('uncaughtException', (error) => {
-  console.error(`uncaughtException: ${error.message}`)
-})
-
-process.on('unhandledRejection', async(reason, promise) => {
-  console.error(`unhandledRejection: ${reason}`, await promise)
-})
+// 此处防止子进程以外推出导致APP异常跟随退出
+process.on('uncaughtException', error => logger.error('uncaughtException', error.message))
+process.on('unhandledRejection', (reason: Error, promise) => logger.error('Unhandled rejection:', reason.message, promise))
+process.on('uncaughtExceptionMonitor', error => logger.error('uncaughtExceptionMonitor', error.message))
