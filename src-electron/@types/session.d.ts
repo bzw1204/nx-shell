@@ -1,8 +1,11 @@
 declare module 'ns-session' {
+  type SessionType = 'ssh' | 'ftp' | 'sftp' | 'telnet' | 'webdav' | 'vnc' | 'serial' | 'local'
+
   interface ISession {
     id: string // 每个会话的唯一标识
     type: SessionType // 会话类型，用于区分不同协议
     terminal: import('@xterm/xterm').Terminal // 终端实例，集成了 xterm.js
+    onData?: (data: string) => void // 数据输出的回调函数
 
     // 建立连接
     connect: () => Promise<void>
@@ -27,4 +30,19 @@ declare module 'ns-session' {
     destroyTerminal: () => void
   }
 
+  interface ISessionConfig {
+    host: string
+    port: number
+    username: string
+    password?: string
+    privateKey?: import('node:buffer').Buffer | string
+    name?: string
+    type: SessionType
+  }
+
+  interface ILocalSessionConfig {
+    type: SessionType
+    shellPath: string
+    args?: string[]
+  }
 }

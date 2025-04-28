@@ -7,6 +7,7 @@ export class BaseSession implements ISession {
   id: string
   type: SessionType
   terminal: Terminal
+  onData?: (data: string) => void
 
   constructor(id: string = nanoid(), type: SessionType) {
     this.id = id
@@ -21,6 +22,9 @@ export class BaseSession implements ISession {
 
   async handleOutput(data: string): Promise<void> {
     this.terminal.write(data)
+    if (this.onData) {
+      this.onData(data)
+    }
   }
 
   async handleInput(_data: string): Promise<void> {

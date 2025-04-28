@@ -18,9 +18,11 @@ declare module 'vue' {
     NLayoutHeader: typeof import('naive-ui')['NLayoutHeader']
     NLayoutSider: typeof import('naive-ui')['NLayoutSider']
     NSplit: typeof import('naive-ui')['NSplit']
+    NText: typeof import('naive-ui')['NText']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SmailLoading: typeof import('./../components/smail-loading/index.vue')['default']
     Terminal: typeof import('./../components/terminal/index.vue')['default']
+    TerminalTabs: typeof import('./../components/terminal/terminal-tabs.vue')['default']
   }
 }

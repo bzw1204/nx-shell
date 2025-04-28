@@ -9,8 +9,6 @@ export class LocalSession extends BaseSession {
   private shellPath: string
   private shellArgs: string[]
 
-  onData?: (data: string) => void
-
   constructor(config: ILocalSessionConfig, id?: string) {
     super(id, 'local')
     this.shellPath = config.shellPath
@@ -27,9 +25,7 @@ export class LocalSession extends BaseSession {
     })
 
     this.pty.onData((data) => {
-      if (this.onData) {
-        this.onData(data)
-      }
+      this.handleOutput(data)
     })
 
     this.pty.onExit((e) => {
@@ -44,6 +40,12 @@ export class LocalSession extends BaseSession {
   async sendCommand(command: string): Promise<void> {
     if (this.pty) {
       this.pty.write(`${command}\r`)
+    }
+  }
+
+  resize(cols: number, rows: number): void {
+    if (this.pty) {
+      this.pty.resize(cols, rows)
     }
   }
 

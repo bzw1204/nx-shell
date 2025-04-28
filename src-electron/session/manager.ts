@@ -60,4 +60,8 @@ export class SessionManager extends EventEmitter {
   getAll(): ISession[] {
     return Array.from(this.sessions.values())
   }
+
+  getSession(sessionId: string): ISession | undefined {
+    return this.sessions.get(sessionId)
+  }
 }
