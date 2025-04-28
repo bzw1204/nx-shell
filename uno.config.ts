@@ -1,12 +1,13 @@
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
 import presetRemToPx from '@unocss/preset-rem-to-px'
-import { defineConfig, presetAttributify, presetIcons, presetUno } from 'unocss'
+import { presetWind3 } from '@unocss/preset-wind3'
+import { defineConfig, presetAttributify, presetIcons } from 'unocss'
 
 export default defineConfig({
   presets: [
     presetRemToPx({ baseFontSize: 4 }),
     presetAttributify(),
-    presetUno(),
+    presetWind3(),
     presetIcons({
       collections: {
         local: FileSystemIconLoader('src/assets/icons')

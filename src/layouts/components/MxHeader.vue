@@ -11,6 +11,7 @@ import SystemControl from './SystemControl.vue'
       <n-input size="small" class="w-100" placeholder="请输入主机名或主机地址" />
       <div class="i-carbon-terminal text-28" />
     </n-flex>
+    <!-- 右侧控制 -->
     <SystemControl />
   </n-flex>
 </template>

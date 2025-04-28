@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SmailLoading } from '@/components'
+import { DragContainer } from '@/layouts'
 
 const status = ref<any>('loading')
 function handleClick() {
@@ -13,12 +13,13 @@ function handleClick() {
 </script>
 
 <template>
-  <n-flex>
+  <n-flex vertical class="wh-full">
     <n-button @click="handleClick">
       切换
     </n-button>
-    <n-flex>
-      <SmailLoading :size="32" :status="status" />
+    <n-flex class="h-screen w-screen">
+      <!-- <SmailLoading :size="32" :status="status" /> -->
+      <DragContainer />
     </n-flex>
   </n-flex>
 </template>

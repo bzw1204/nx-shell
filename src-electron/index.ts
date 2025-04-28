@@ -24,7 +24,12 @@ app.whenReady().then(async() => {
   useUIKit()
   registerTitleBarListener()
   await createWindow()
-
+  // const session = new LocalSession({
+  //   shellPath: 'C:\\Windows\\System32\\cmd.exe',
+  //   args: [],
+  //   type: 'local'
+  // })
+  // session.connect()
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow()

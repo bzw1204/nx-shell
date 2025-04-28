@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { GlobalThemeOverrides } from 'naive-ui'
-import { darkTheme } from 'naive-ui'
 import { NaiveProviderContent } from '@/components'
+import { darkTheme } from 'naive-ui'
 
 const themeOverrides: GlobalThemeOverrides = {
   common: {
@@ -22,10 +22,6 @@ const themeOverrides: GlobalThemeOverrides = {
     // peers: {},
     // headerColor: '#252a3800',
     // siderColor: '#252a3800'
-  },
-  DataTable: {
-    thColor: '#FFFFFF00',
-    tdColor: '#FFFFFF00'
   },
   Dropdown: {
     boxShadow: 'none'
