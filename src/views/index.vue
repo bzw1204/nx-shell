@@ -208,15 +208,15 @@ function handleMenuSelect(key: string) {
 </script>
 
 <template>
-  <div class="app-container">
+  <div class=":uno: app-container">
     <!-- 顶部标题栏 -->
-    <header class="app-header">
-      <div class="app-title">
+    <header class=":uno: app-header">
+      <div class=":uno: app-title">
         <!-- 修复图片路径 -->
-        <span class="app-logo">NX</span>
+        <span class=":uno: app-logo">NX</span>
         <h1>NxShell</h1>
       </div>
-      <nav class="app-nav">
+      <nav class=":uno: app-nav">
         <n-button-group>
           <n-button
             :type="activeSection === 'terminal' ? 'primary' : 'default'"
@@ -238,7 +238,7 @@ function handleMenuSelect(key: string) {
           </n-button>
         </n-button-group>
       </nav>
-      <div class="app-controls">
+      <div class=":uno: app-controls">
         <n-dropdown
           trigger="click"
           :options="menuOptions"
@@ -270,15 +270,15 @@ function handleMenuSelect(key: string) {
     </header>
 
     <!-- 主内容区域 -->
-    <main class="app-main">
+    <main class=":uno: app-main">
       <!-- 终端标签页 -->
-      <div v-show="activeSection === 'terminal'" class="app-section">
-        <TerminalTabs class="full-height" />
+      <div v-show="activeSection === 'terminal'" class=":uno: app-section">
+        <TerminalTabs class=":uno: full-height" />
       </div>
 
       <!-- 设置页面 -->
-      <div v-show="activeSection === 'settings'" class="app-section settings-section">
-        <n-card title="终端设置" class="settings-card">
+      <div v-show="activeSection === 'settings'" class=":uno: app-section settings-section">
+        <n-card title="终端设置" class=":uno: settings-card">
           <n-space vertical>
             <n-form-item label="字体大小">
               <n-input-number v-model:value="terminalConfig.fontSize" :min="8" :max="32" />
@@ -305,7 +305,7 @@ function handleMenuSelect(key: string) {
           </n-space>
         </n-card>
 
-        <n-card title="系统信息" class="settings-card">
+        <n-card title="系统信息" class=":uno: settings-card">
           <n-descriptions bordered :column="1">
             <n-descriptions-item label="平台">
               {{ systemInfo.platform }}
@@ -322,7 +322,7 @@ function handleMenuSelect(key: string) {
           </n-descriptions>
         </n-card>
 
-        <n-card title="关于" class="settings-card">
+        <n-card title="关于" class=":uno: settings-card">
           <n-descriptions bordered :column="1">
             <n-descriptions-item label="应用名称">
               {{ appInfo.name }}
@@ -341,21 +341,21 @@ function handleMenuSelect(key: string) {
       </div>
 
       <!-- 拖拽布局部分 -->
-      <div v-show="activeSection === 'dragLayout'" class="app-section">
-        <DragContainer class="full-height" />
+      <div v-show="activeSection === 'dragLayout'" class=":uno: app-section">
+        <DragContainer class=":uno: full-height" />
       </div>
     </main>
 
     <!-- 状态栏 -->
-    <footer class="app-footer">
-      <div class="status-indicator" :class="appState.status">
-        <span class="status-dot" />
+    <footer class=":uno: app-footer">
+      <div class=":uno: status-indicator" :class="appState.status">
+        <span class=":uno: status-dot" />
         <span>{{ appState.status }}</span>
       </div>
-      <div class="version-info">
+      <div class=":uno: version-info">
         {{ appState.version }}
       </div>
-      <div class="env-info">
+      <div class=":uno: env-info">
         {{ appState.environment }}
       </div>
     </footer>

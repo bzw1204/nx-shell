@@ -6,7 +6,7 @@ const isMacOS = ref(window.$api.platform.isMacOS)
 
 <template>
   <n-el>
-    <title-bar v-if="!isMacOS" overlay class="system-controls" />
+    <title-bar v-if="!isMacOS" overlay class=":uno: system-controls" />
   </n-el>
 </template>
 

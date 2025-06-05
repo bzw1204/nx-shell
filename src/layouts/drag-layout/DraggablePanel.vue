@@ -49,15 +49,15 @@ function handleDragEnd(event: DragEvent) {
     @dragstart="handleDragStart"
     @dragend="handleDragEnd"
   >
-    <div class="panel-header">
-      <div class="panel-title">
+    <div class=":uno: panel-header">
+      <div class=":uno: panel-title">
         {{ title }}
       </div>
-      <div class="panel-drag-handle">
-        <span class="drag-icon">⋮⋮</span>
+      <div class=":uno: panel-drag-handle">
+        <span class=":uno: drag-icon">⋮⋮</span>
       </div>
     </div>
-    <div class="panel-content">
+    <div class=":uno: panel-content">
       <slot />
     </div>
   </div>

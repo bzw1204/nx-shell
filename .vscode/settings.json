@@ -3,7 +3,7 @@
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "[javascript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "html.customData": [
     "./node_modules/@electron-uikit/titlebar/custom-elements.json"

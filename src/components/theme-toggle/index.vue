@@ -48,16 +48,16 @@ async function toggleDark({ clientX, clientY }: MouseEvent) {
         :circle="!normal"
         :size="size"
         :focusable="false"
-        class="theme-toggle-btn"
+        class=":uno: theme-toggle-btn"
         :title="isDark ? '切换到亮色模式' : '切换到暗色模式'"
         @click="toggleDark"
       >
         <template #icon>
-          <span class="icon-wrapper" :class="{ dark: isDark, light: !isDark }">
+          <span class=":uno: icon-wrapper" :class="{ ':uno: dark': isDark, ':uno: light': !isDark }">
             <span
               :class="[
-                `${isDark ? 'i-carbon-moon' : 'i-carbon-sun'}`,
-                { 'sun-anim': !isDark, 'moon-anim': isDark },
+                `${isDark ? ':uno: i-carbon-moon' : ':uno: i-carbon-sun'}`,
+                { ':uno: sun-anim': !isDark, ':uno: moon-anim': isDark },
               ]"
             />
           </span>

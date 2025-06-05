@@ -2,7 +2,6 @@
 import {
   CopyOutline,
   ExtensionPuzzleOutline,
-  GitBranchOutline,
   SearchOutline,
   SettingsOutline
 } from '@vicons/ionicons5'
@@ -16,7 +15,6 @@ const activeKey = ref('explorer')
 const menuItems = [
   { icon: CopyOutline, tooltip: '资源管理器', key: 'explorer' },
   { icon: SearchOutline, tooltip: '搜索', key: 'search' },
-  { icon: GitBranchOutline, tooltip: 'Git', key: 'git' },
   { icon: ExtensionPuzzleOutline, tooltip: '扩展', key: 'extensions' }
 ]
 
@@ -32,31 +30,29 @@ function handleMenuClick(key: string) {
 </script>
 
 <template>
-  <div class="h-full flex flex-col justify-between">
-    <div class="flex flex-1 flex-col items-center gap-2 py-2">
+  <n-el class=":uno: box-border h-full flex flex-col justify-between pb-10">
+    <div class=":uno: flex flex-1 flex-col items-center gap-10">
       <NTooltip v-for="item in menuItems" :key="item.key" placement="right" :show-arrow="false">
         <template #trigger>
-          <NButton
-            text
-            class="w-full flex justify-center py-2"
+          <div
+            class=":uno: menu-item flex-center"
             :class="{
-              'text-gray-400 hover:text-white': activeKey !== item.key,
-              'text-white bg-gray-700': activeKey === item.key,
+              ':uno: text-[var(--primary-color)] !border-l-[var(--primary-color)]': activeKey === item.key,
             }"
             @click="handleMenuClick(item.key)"
           >
             <NIcon size="24">
               <component :is="item.icon" />
             </NIcon>
-          </NButton>
+          </div>
         </template>
         {{ item.tooltip }}
       </NTooltip>
     </div>
-    <div class="mt-auto flex flex-col items-center py-2">
+    <div class=":uno: flex flex-col items-center">
       <NTooltip placement="right" :show-arrow="false">
         <template #trigger>
-          <NButton text class="w-full flex justify-center py-2 text-gray-400 hover:text-white">
+          <NButton text class=":uno: w-full flex justify-center text-gray-400 hover:text-white">
             <NIcon size="24">
               <SettingsOutline />
             </NIcon>
@@ -65,11 +61,15 @@ function handleMenuClick(key: string) {
         设置
       </NTooltip>
     </div>
-  </div>
+  </n-el>
 </template>
 
-<style scoped>
-:deep(.n-button:not(.n-button--disabled):focus) {
-  box-shadow: none;
+<style scoped lang="scss">
+.menu-item {
+  --at-apply: box-border w-full border-l-2 border-l-transparent border-l-solid p-5;
+
+  &:hover {
+    --at-apply: text-[var(--primary-color)] cursor-pointer;
+  }
 }
 </style>

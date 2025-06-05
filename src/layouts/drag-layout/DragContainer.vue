@@ -398,27 +398,27 @@ function findContainerById(node: Layout, id: string): Layout | null {
 </script>
 
 <template>
-  <div class="drag-container">
-    <div class="toolbar">
+  <div class=":uno: drag-container">
+    <div class=":uno: toolbar">
       <h3>拖拽布局演示</h3>
-      <div class="panel-list">
+      <div class=":uno: panel-list">
         <DraggablePanel
           v-for="panel in panels"
           :id="panel.id"
           :key="panel.id"
           :title="panel.title"
-          class="panel-item"
+          class=":uno: panel-item"
           @drag-start="handleDragStart"
           @drag-end="handleDragEnd"
         >
-          <div class="panel-preview">
+          <div class=":uno: panel-preview">
             {{ panel.title }}
           </div>
         </DraggablePanel>
       </div>
     </div>
 
-    <div class="layout-container">
+    <div class=":uno: layout-container">
       <NestedLayout
         :item="layout"
         :panels="panels"

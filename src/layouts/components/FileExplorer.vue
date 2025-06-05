@@ -52,7 +52,7 @@ const data: TreeOption[] = [
 </script>
 
 <template>
-  <div class="file-explorer">
+  <div class=":uno: file-explorer">
     <div>xxx</div>
     <!-- 文件列表 -->
     <n-space vertical :size="12">

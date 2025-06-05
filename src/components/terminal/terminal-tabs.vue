@@ -292,40 +292,40 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="terminal-tabs-container">
+  <div class=":uno: terminal-tabs-container">
     <!-- 标签栏 -->
-    <div class="terminal-tabs-header">
+    <div class=":uno: terminal-tabs-header">
       <div
         v-for="tab in tabs"
         :key="tab.id"
-        class="terminal-tab"
-        :class="{ 'active-tab': tab.active }"
+        class=":uno: terminal-tab"
+        :class="{ ':uno: active-tab': tab.active }"
         @click="activateTab(tab.id)"
       >
-        <span class="tab-title">{{ tab.title }}</span>
-        <button class="tab-close" @click.stop="closeTab(tab.id)">
+        <span class=":uno: tab-title">{{ tab.title }}</span>
+        <button class=":uno: tab-close" @click.stop="closeTab(tab.id)">
           ×
         </button>
       </div>
 
-      <div class="tab-actions">
-        <button class="action-button" @click="createTab('本地终端', 'local')">
+      <div class=":uno: tab-actions">
+        <button class=":uno: action-button" @click="createTab('本地终端', 'local')">
           + 本地
         </button>
-        <button class="action-button" @click="createSshSession">
+        <button class=":uno: action-button" @click="createSshSession">
           + SSH
         </button>
       </div>
     </div>
 
     <!-- 终端容器 -->
-    <div class="terminal-tabs-content">
+    <div class=":uno: terminal-tabs-content">
       <div
         v-for="tab in tabs"
         :id="`terminal-${tab.id}`"
         :key="tab.id"
-        class="terminal-container"
-        :class="{ 'active-terminal': tab.active }"
+        class=":uno: terminal-container"
+        :class="{ ':uno: active-terminal': tab.active }"
         tabindex="0"
       />
     </div>

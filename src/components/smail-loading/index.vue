@@ -25,13 +25,13 @@ const containerStyle = computed(() => ({
 
 <template>
   <div
-    class="smile-loading-container"
+    class=":uno: smile-loading-container :uno:"
     :style="containerStyle"
   >
     <!-- 进度条 SVG -->
     <svg
-      class="smile-loading-svg"
-      :class="{ 'is-loading': loading }"
+      class=":uno: smile-loading-svg"
+      :class="{ ':uno: is-loading': loading }"
       viewBox="0 0 512 512"
       xmlns="http://www.w3.org/2000/svg"
       shape-rendering="geometricPrecision"
@@ -39,7 +39,7 @@ const containerStyle = computed(() => ({
       <!-- 背景圆环 -->
       <circle
         v-if="!loading"
-        class="circle-track"
+        class=":uno: circle-track"
         cx="256"
         cy="256"
         r="204"
@@ -48,11 +48,11 @@ const containerStyle = computed(() => ({
       />
       <!-- 动态进度条 -->
       <circle
-        class="path"
+        class=":uno: path"
         :class="{
-          'is-loading': loading,
-          'is-success': status === 'success',
-          'is-error': status === 'error',
+          ':uno: is-loading': loading,
+          ':uno: is-success': status === 'success',
+          ':uno: is-error': status === 'error',
         }"
         cx="256"
         cy="256"
@@ -64,24 +64,24 @@ const containerStyle = computed(() => ({
 
     <!-- 表情图标 SVG -->
     <svg
-      class="smile-icon-svg"
+      class=":uno: smile-icon-svg"
       viewBox="0 0 512 512"
       xmlns="http://www.w3.org/2000/svg"
       shape-rendering="geometricPrecision"
     >
       <g
-        class="smile-icon"
+        class=":uno: smile-icon"
         :class="{
-          'is-loading': loading,
-          'is-success': status === 'success',
-          'is-error': status === 'error',
+          ':uno: is-loading': loading,
+          ':uno: is-success': status === 'success',
+          ':uno: is-error': status === 'error',
         }"
         fill="none"
       >
         <!-- 脸部轮廓和眼睛 -->
-        <circle cx="256" cy="256" r="133" fill="var(--color)" class="face" />
-        <circle cx="205" cy="225" r="20" fill="var(--n-color)" class="eye" />
-        <circle cx="307" cy="225" r="20" fill="var(--n-color)" class="eye" />
+        <circle cx="256" cy="256" r="133" fill="var(--color)" class=":uno: face" />
+        <circle cx="205" cy="225" r="20" fill="var(--n-color)" class=":uno: eye" />
+        <circle cx="307" cy="225" r="20" fill="var(--n-color)" class=":uno: eye" />
 
         <!-- 嘴巴 - 根据状态变化 -->
         <path
@@ -91,7 +91,7 @@ const containerStyle = computed(() => ({
           stroke-width="20"
           stroke-linecap="round"
           fill="none"
-          class="mouth"
+          class=":uno: mouth"
         />
         <path
           v-if="status === 'error'"
@@ -100,7 +100,7 @@ const containerStyle = computed(() => ({
           stroke-width="20"
           stroke-linecap="round"
           fill="none"
-          class="mouth"
+          class=":uno: mouth"
         />
         <path
           v-if="status === 'loading'"
@@ -109,7 +109,7 @@ const containerStyle = computed(() => ({
           stroke-width="20"
           stroke-linecap="round"
           fill="none"
-          class="mouth"
+          class=":uno: mouth"
         />
       </g>
     </svg>

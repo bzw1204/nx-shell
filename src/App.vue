@@ -6,7 +6,7 @@ const { theme } = storeToRefs(useSettingStore())
 </script>
 
 <template>
-  <n-config-provider :theme="theme === 'dark' ? darkTheme : null" class="select-none">
+  <n-config-provider :theme="theme === 'dark' ? darkTheme : null" class=":uno: select-none">
     <NaiveProviderContent>
       <router-view />
     </NaiveProviderContent>

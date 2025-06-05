@@ -80,8 +80,8 @@ function elementContains(parent: HTMLElement | null, child: HTMLElement | null):
 <template>
   <div
     v-if="item.type === 'panel' && item.panelId"
-    class="panel-container"
-    :class="{ 'active-panel': isActive }"
+    class=":uno: panel-container"
+    :class="{ ':uno: active-panel': isActive }"
     :style="{ flex: `${item.size || 1} 1 0%` }"
     @dragenter.capture="handleDragEnter($event, item.id)"
     @dragover.capture="handleDragOver"
@@ -90,7 +90,7 @@ function elementContains(parent: HTMLElement | null, child: HTMLElement | null):
   >
     <div
       v-if="showDropZones && targetContainerId === item.id"
-      class="drop-indicator"
+      class=":uno: drop-indicator"
       :class="[currentDropZone]"
     />
 
@@ -106,7 +106,7 @@ function elementContains(parent: HTMLElement | null, child: HTMLElement | null):
 
   <div
     v-else-if="item.type === 'container' && item.children && item.children.length > 0"
-    class="container"
+    class=":uno: container"
     :class="[item.direction]"
     :style="{ flex: `${item.size || 1} 1 0%` }"
   >
@@ -129,7 +129,7 @@ function elementContains(parent: HTMLElement | null, child: HTMLElement | null):
       <!-- 容器之间的分隔线 -->
       <div
         v-if="index < item.children.length - 1"
-        class="divider"
+        class=":uno: divider"
         :class="[item.direction]"
       />
     </template>

@@ -113,7 +113,7 @@ export function getAvailableShells(): TerminalOption[] {
   // Windows Terminal (wt.exe)
   const wtPath
     = where('wt')
-    || path.join(process.env.LOCALAPPDATA || '', 'Microsoft\\WindowsApps\\wt.exe')
+      || path.join(process.env.LOCALAPPDATA || '', 'Microsoft\\WindowsApps\\wt.exe')
   if (exists(wtPath)) {
     terminals.push({
       id: `wt:${nanoid(5)}`,
