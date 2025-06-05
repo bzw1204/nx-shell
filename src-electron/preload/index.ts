@@ -15,11 +15,12 @@ const api: IApi = {
   }
 }
 const store: IRendererStore = {
+  has: key => window.ipc.invoke('store:has', key),
   get: (key, defaultValue?: any) => window.ipc.invoke('store:get', key, defaultValue),
   set: (key, value) => window.ipc.invoke('store:set', key, value),
-  remove: key => window.ipc.invoke('store:remove', key),
-  reset: (key, value) => window.ipc.invoke('store:reset', key, value)
-
+  delete: key => window.ipc.invoke('store:delete', key),
+  reset: (key, value) => window.ipc.invoke('store:reset', key, value),
+  clear: () => window.ipc.invoke('store:clear')
 }
 if (process.contextIsolated) {
   try {

@@ -3,7 +3,7 @@ import { is } from '@electron-toolkit/utils'
 import { attachTitleBarToWindow } from '@electron-uikit/titlebar'
 import { BrowserWindow, shell } from 'electron'
 
-export async function createWindow() {
+export async function createWindow(): Promise<BrowserWindow> {
   const mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
@@ -54,4 +54,6 @@ export async function createWindow() {
     await mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
   attachTitleBarToWindow(mainWindow)
+
+  return mainWindow
 }

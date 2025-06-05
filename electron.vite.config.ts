@@ -72,6 +72,9 @@ export default defineConfig({
           'pinia',
           {
             'naive-ui': ['useDialog', 'useMessage', 'useNotification', 'useLoadingBar', 'useModal']
+          },
+          {
+            '@vueuse/core': ['set', 'useToggle']
           }
         ],
         dirs: ['src/store'],

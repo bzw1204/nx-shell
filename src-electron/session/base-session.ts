@@ -27,8 +27,9 @@ export class BaseSession implements ISession {
     }
   }
 
-  async handleInput(_data: string): Promise<void> {
-
+  async handleInput(data: string): Promise<void> {
+    // 基础会话的handleInput方法，将在子类中被覆盖
+    console.warn(`[BaseSession ${this.id}] 基础handleInput方法被调用，但这应该在子类中实现。数据:`, data)
   }
 
   async listenToTerminalEvents(): Promise<void> {

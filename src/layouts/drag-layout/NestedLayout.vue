@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { DropZone, Layout, PanelItem } from 'drag-layout'
-import { defineEmits, defineProps, ref } from 'vue'
 import DraggablePanel from './DraggablePanel.vue'
 
 const props = defineProps<{

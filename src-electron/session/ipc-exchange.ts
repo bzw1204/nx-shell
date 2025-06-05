@@ -126,7 +126,15 @@ export class IpcExchange {
     }
 
     try {
-      await session.connect()
+      // 添加超时处理，避免连接操作卡住
+      const connectPromise = session.connect()
+      const timeoutPromise = new Promise<never>((_, reject) => {
+        setTimeout(() => {
+          reject(new Error(`会话连接超时: ${sessionId}`))
+        }, 5000) // 5秒超时
+      })
+
+      await Promise.race([connectPromise, timeoutPromise])
       return true
     } catch (error) {
       logger.error(`连接会话 ${sessionId} 失败`, error)
@@ -231,6 +239,12 @@ export class IpcExchange {
     }
 
     try {
+      // 输入数据的十六进制表示，便于调试
+      const hexData = Array.from(data).map(c => c.charCodeAt(0).toString(16).padStart(2, '0')).join(' ')
+      logger.info(`[IpcExchange] 处理会话 ${sessionId} 输入: "${data.replace(/\r/g, '\\r')}" (hex: ${hexData})`)
+
+      // 直接交给会话处理，不做特殊处理
+      // 每个输入只调用一次方法，避免重复处理
       session.handleInput(data)
     } catch (error) {
       logger.error(`处理会话 ${sessionId} 输入失败`, error)

@@ -1,12 +1,13 @@
 declare module 'preload' {
+  import type { ISettings } from 'nx-settings'
+
   interface IRendererStore {
-    get: <K extends keyof XSchema>(key: K) => Promise<Required<XSchema>[K]>
-    get: <K extends keyof XSchema>(key: K, defaultValue: Required<XSchema>[K],) => Promise<Required<XSchema>[K]>
-    get: <K extends keyof string, V = unknown>(key: K, defaultValue?: V,) => Promise<V>
-    get: (key: string, defaultValue?: unknown) => Promise<unknown>
-    set: <K extends keyof XSchema>(key: K, value: XSchema[K],) => Promise<boolean>
-    remove: <K extends keyof XSchema>(key: K) => Promise<boolean>
-    reset: <K extends keyof XSchema>(key: K, value?: XSchema[K],) => Promise<boolean>
+    get: <K extends keyof ISettings>(key: K, defaultValue: Required<ISettings>[K],) => Promise<Required<ISettings>[K]>
+    set: <K extends keyof ISettings>(key: K, value: ISettings[K],) => Promise<boolean>
+    has: <K extends keyof ISettings>(key: K) => Promise<boolean>
+    delete: <K extends keyof ISettings>(key: K) => Promise<boolean>
+    reset: <K extends keyof ISettings>(key: K, value?: ISettings[K],) => Promise<boolean>
+    clear: () => Promise<boolean>
   }
   interface IApi {
     platform: {

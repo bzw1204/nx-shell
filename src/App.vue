@@ -1,45 +1,33 @@
 <script setup lang="ts">
-import type { GlobalThemeOverrides } from 'naive-ui'
 import { NaiveProviderContent } from '@/components'
 import { darkTheme } from 'naive-ui'
 
-const themeOverrides: GlobalThemeOverrides = {
-  common: {
-    // bodyColor: '#FFFFFF00',
-    primaryColor: 'rgb(46, 89, 92)',
-    primaryColorHover: '#4098fc',
-    primaryColorPressed: '#4098fc',
-    primaryColorSuppl: '#4098fc',
-    infoColor: '#2080f0',
-    infoColorHover: '#4098fc',
-    infoColorPressed: '#1060c9',
-    infoColorSuppl: '#4098fc',
-    errorColor: '#D03050FF',
-    errorColorHover: '#CF3F5CFF'
-  },
-  Layout: {
-    // color: `var(--color-2)`,
-    // peers: {},
-    // headerColor: '#252a3800',
-    // siderColor: '#252a3800'
-  },
-  Dropdown: {
-    boxShadow: 'none'
-  },
-  Dialog: {
-    closeMargin: '16px 16px 0 0',
-    padding: '16px'
-  },
-  Tree: {
-    nodeHeight: '40px'
-  }
-}
+const { theme } = storeToRefs(useSettingStore())
 </script>
 
 <template>
-  <n-config-provider :theme-overrides="themeOverrides" :theme="darkTheme" class="select-none">
+  <n-config-provider :theme="theme === 'dark' ? darkTheme : null" class="select-none">
     <NaiveProviderContent>
       <router-view />
     </NaiveProviderContent>
   </n-config-provider>
 </template>
+
+<style>
+/* 切换主题的动画效果 */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root),
+.dark::view-transition-new(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root),
+.dark::view-transition-old(root) {
+  z-index: 9999;
+}
+</style>

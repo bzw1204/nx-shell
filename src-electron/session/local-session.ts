@@ -43,6 +43,23 @@ export class LocalSession extends BaseSession {
     }
   }
 
+  async handleInput(data: string): Promise<void> {
+    if (!this.pty) {
+      console.warn(`[LocalSession ${this.id}] 无法处理输入，pty未初始化:`, data)
+      return
+    }
+
+    const hexData = Array.from(data).map(c => c.charCodeAt(0).toString(16).padStart(2, '0')).join(' ')
+    console.log(`[LocalSession ${this.id}] 处理输入: "${data}" (hex: ${hexData})`)
+
+    if (data === '\r') {
+      console.log(`[LocalSession ${this.id}] 处理回车键`)
+      this.pty.write('\r')
+    } else {
+      this.pty.write(data)
+    }
+  }
+
   resize(cols: number, rows: number): void {
     if (this.pty) {
       this.pty.resize(cols, rows)

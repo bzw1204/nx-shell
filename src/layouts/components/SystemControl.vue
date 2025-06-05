@@ -5,7 +5,9 @@ const isMacOS = ref(window.$api.platform.isMacOS)
 </script>
 
 <template>
-  <title-bar v-if="!isMacOS" overlay class="system-controls" />
+  <n-el>
+    <title-bar v-if="!isMacOS" overlay class="system-controls" />
+  </n-el>
 </template>
 
 <style lang="scss" scoped>
@@ -14,10 +16,12 @@ const isMacOS = ref(window.$api.platform.isMacOS)
   width: 102px;
   height: 100%;
   overflow: hidden;
-  background-color: transparent;
   --tb-control-height: 28px;
-  --tb-control-symbol-color: rgb(255, 255, 255);
-  --tb-control-hover-color: #ffffff1c;
-  --tb-control-close-symbol-color: rgb(255, 255, 255);
+  --tb-control-symbol-color: var(--text-color-2);
+  --tb-control-hover-color: var(--button-color-2-hover);
+  --tb-control-close-symbol-color: var(--text-color-2);
+  .window__control {
+    background-color: var(--button-color-2);
+  }
 }
 </style>

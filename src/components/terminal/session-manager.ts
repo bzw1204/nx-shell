@@ -1,5 +1,51 @@
 import type { LocalTerminalOptions, SshTerminalOptions, TerminalSession } from 'terminal'
-import { EventEmitter } from 'node:events'
+import { ElectronTerminalAdapter, ElectronTerminalSession } from './electron-terminal-adapter'
+
+// 定义事件处理器函数类型
+type EventHandler = (...args: any[]) => void
+
+// 创建一个浏览器兼容的 EventEmitter 实现
+class EventEmitter {
+  private events: Record<string, EventHandler[]> = {}
+
+  on(event: string, listener: EventHandler): this {
+    if (!this.events[event]) {
+      this.events[event] = []
+    }
+    this.events[event].push(listener)
+    return this
+  }
+
+  emit(event: string, ...args: any[]): boolean {
+    const listeners = this.events[event]
+    if (!listeners || listeners.length === 0) {
+      return false
+    }
+
+    listeners.forEach((listener) => {
+      listener(...args)
+    })
+    return true
+  }
+
+  removeListener(event: string, listener: EventHandler): this {
+    if (!this.events[event]) {
+      return this
+    }
+
+    this.events[event] = this.events[event].filter(l => l !== listener)
+    return this
+  }
+
+  removeAllListeners(event?: string): this {
+    if (event) {
+      delete this.events[event]
+    } else {
+      this.events = {}
+    }
+    return this
+  }
+}
 
 export class TerminalSessionManager extends EventEmitter {
   private sessions: Map<string, TerminalSession> = new Map()
@@ -106,18 +152,62 @@ export class TerminalSessionManager extends EventEmitter {
   /**
    * 创建本地会话
    */
-  createLocalSession(_options: LocalTerminalOptions): TerminalSession {
-    // 实际实现会在electron端处理，这里只是接口定义
-    // 需要与Electron IPC通信创建真实会话
-    throw new Error('需要由具体实现类实现该方法')
+  async createLocalSession(options: LocalTerminalOptions): Promise<TerminalSession> {
+    try {
+      // 使用适配器创建本地会话
+      const session = await ElectronTerminalAdapter.createLocalSession(options)
+
+      // 添加到会话列表
+      this.addSession(session)
+
+      // 连接到会话
+      await session.connect()
+
+      return session
+    } catch (error) {
+      console.error('创建本地会话失败:', error)
+      throw error
+    }
   }
 
   /**
    * 创建SSH会话
    */
-  createSshSession(_options: SshTerminalOptions): TerminalSession {
-    // 实际实现会在electron端处理，这里只是接口定义
-    throw new Error('需要由具体实现类实现该方法')
+  async createSshSession(options: SshTerminalOptions): Promise<TerminalSession> {
+    try {
+      // 使用适配器创建SSH会话
+      const session = await ElectronTerminalAdapter.createSshSession(options)
+
+      // 添加到会话列表
+      this.addSession(session)
+
+      // 连接到会话
+      await session.connect()
+
+      return session
+    } catch (error) {
+      console.error('创建SSH会话失败:', error)
+      throw error
+    }
+  }
+
+  /**
+   * 初始化会话管理器，加载可能的现有会话
+   */
+  async initialize(): Promise<void> {
+    try {
+      // 获取来自后端的会话列表
+      const sessions = await ElectronTerminalAdapter.listSessions()
+
+      // 重建会话对象并添加到管理器
+      for (const { id, type } of sessions) {
+        const termType = type as 'local' | 'ssh' | 'telnet' | 'serial'
+        const session = new ElectronTerminalSession(id, termType)
+        this.addSession(session)
+      }
+    } catch (error) {
+      console.error('初始化会话管理器失败:', error)
+    }
   }
 
   /**
@@ -127,6 +217,7 @@ export class TerminalSessionManager extends EventEmitter {
     for (const session of this.sessions.values()) {
       if (session.isConnected) {
         session.disconnect()
+        this.emit('session-removed', session.id)
       }
       session.dispose()
     }
