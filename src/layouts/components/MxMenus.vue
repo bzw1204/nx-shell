@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ThemeToggle } from '@/components'
 import {
   CopyOutline,
   ExtensionPuzzleOutline,
@@ -7,24 +8,34 @@ import {
 } from '@vicons/ionicons5'
 import { NButton, NIcon, NTooltip } from 'naive-ui'
 import { ref } from 'vue'
+import FileExplorer from './FileExplorer.vue'
 
 const emit = defineEmits(['togglePanel'])
 
 const activeKey = ref('explorer')
 
 const menuItems = [
-  { icon: CopyOutline, tooltip: '资源管理器', key: 'explorer' },
+  {
+    icon: CopyOutline,
+    tooltip: '资源管理器',
+    key: 'explorer',
+    component: FileExplorer,
+    fn: () => {
+      emit('togglePanel')
+    }
+  },
   { icon: SearchOutline, tooltip: '搜索', key: 'search' },
   { icon: ExtensionPuzzleOutline, tooltip: '扩展', key: 'extensions' }
 ]
 
-function handleMenuClick(key: string) {
-  if (key === activeKey.value) {
+function handleMenuClick(item: any) {
+  if (item.key === activeKey.value) {
     // 如果点击当前激活的菜单项，则切换面板显示状态
+    item.fn()
     emit('togglePanel')
   } else {
     // 切换到新的菜单项
-    activeKey.value = key
+    activeKey.value = item.key
   }
 }
 </script>
@@ -39,7 +50,7 @@ function handleMenuClick(key: string) {
             :class="{
               ':uno: text-[var(--primary-color)] !border-l-[var(--primary-color)]': activeKey === item.key,
             }"
-            @click="handleMenuClick(item.key)"
+            @click="handleMenuClick(item)"
           >
             <NIcon size="24">
               <component :is="item.icon" />
@@ -49,10 +60,15 @@ function handleMenuClick(key: string) {
         {{ item.tooltip }}
       </NTooltip>
     </div>
-    <div class=":uno: flex flex-col items-center">
+    <div class=":uno: flex flex-col items-center gap-20 pb-10">
+      <ThemeToggle />
       <NTooltip placement="right" :show-arrow="false">
         <template #trigger>
-          <NButton text class=":uno: w-full flex justify-center text-gray-400 hover:text-white">
+          <NButton
+            text
+            class=":uno: w-full flex justify-center text-gray-400 hover:text-white"
+            @click="() => $router.push('/settings')"
+          >
             <NIcon size="24">
               <SettingsOutline />
             </NIcon>

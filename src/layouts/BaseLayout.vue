@@ -1,15 +1,39 @@
 <script setup lang="ts">
-import MxHeader from '@/layouts/components/MxHeader.vue'
-import MxMenus from './components/MxMenus.vue'
+import type { DockviewReadyEvent } from 'dockview-vue'
+import { themeDracula } from 'dockview-core'
+import { DockviewVue } from 'dockview-vue'
+import { FileExplorer, MxHeader, MxMenus } from './components'
+import 'dockview-vue/dist/styles/dockview.css'
 
-const showPanel = ref(true)
+function onReady({ api }: DockviewReadyEvent) {
+  // 左侧资源管理器面板
+  // const explorer = api.addPanel({
+  //   id: 'explorer',
+  //   title: 'Explorer',
+  //   component: 'file-explorer',
+  //   minimumWidth: 0,
+  //   maximumWidth: 500
+  // })
+  // explorer.group.api.setSize({ width: 200 })
+  // explorer.group.header.hidden = true
+  // explorer.group.locked = 'no-drop-target'
+  window.dockview = api
+  // 右侧编辑器面板
+  api.addPanel({
+    id: 'editor',
+    title: 'Editor',
+    component: 'editor'
+  })
+}
+const showPanel = ref('200px')
 function togglePanel() {
-  showPanel.value = !showPanel.value
+  console.log(showPanel.value)
+  showPanel.value = showPanel.value === '200px' ? '0' : '200px'
 }
 </script>
 
 <template>
-  <n-layout :native-scrollbar="false" class=":uno: wh-full overflow-hidden">
+  <n-layout :native-scrollbar="false" class="wh-full overflow-hidden">
     <n-layout-header>
       <MxHeader />
     </n-layout-header>
@@ -17,19 +41,57 @@ function togglePanel() {
       <!-- 活动栏 - 类似VSCode左侧图标栏 -->
       <n-layout-sider
         :native-scrollbar="false"
-        class=":uno: h-content"
+        class="h-content"
         content-class="h-[calc(100vh-40px)] border-box"
         :width="48"
         :collapsed-width="48"
         bordered
       >
-        <MxMenus @toggle-panel="togglePanel" />
+        <MxMenus @click="togglePanel" />
       </n-layout-sider>
 
       <!-- 主内容区域 - 使用分割面板 -->
-      <n-layout-content class=":uno: h-content">
-        <router-view />
+      <n-layout-content class="h-content">
+        <n-split
+          direction="horizontal"
+          class="h-content"
+          :min="0"
+          :max="0.3"
+          :resize-trigger-size="1"
+          :watch-props="['defaultSize']"
+          :default-size="showPanel"
+        >
+          <template #1>
+            <component :is="FileExplorer" />
+          </template>
+          <template #2>
+            <DockviewVue
+              class="wh-full"
+              :theme="themeDracula"
+              watermark-component="watermark"
+              :disable-floating-groups="true"
+              @ready="onReady"
+            />
+          </template>
+        </n-split>
       </n-layout-content>
     </n-layout>
   </n-layout>
 </template>
+
+<style lang="scss" scoped>
+.dockview-theme-abyss {
+  .groupview {
+    &.active-group {
+      > .tabs-and-actions-container {
+        border-bottom: 2px solid var(--dv-activegroup-visiblepanel-tab-background-color);
+      }
+    }
+    &.inactive-group {
+      > .tabs-and-actions-container {
+        border-bottom: 2px solid var(--dv-inactivegroup-visiblepanel-tab-background-color);
+      }
+    }
+  }
+}
+</style>

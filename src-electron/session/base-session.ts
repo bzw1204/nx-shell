@@ -1,27 +1,29 @@
 import type { ISession, SessionType } from 'ns-session'
-import { Terminal } from '@xterm/xterm'
-import { ipcMain } from 'electron/main'
 import { nanoid } from 'nanoid'
 
 export class BaseSession implements ISession {
   id: string
   type: SessionType
-  terminal: Terminal
   onData?: (data: string) => void
+
+  // 移除terminal属性，这应该在渲染进程中处理
+  private _isConnected: boolean = false
 
   constructor(id: string = nanoid(), type: SessionType) {
     this.id = id
     this.type = type
-    this.terminal = new Terminal()
   }
 
-  async initializeTerminal(): Promise<void> {
-    this.terminal.options.cursorBlink = true
-    this.terminal.open(document.getElementById('terminal-container')!)
+  get isConnected(): boolean {
+    return this._isConnected
   }
 
+  protected setConnected(connected: boolean): void {
+    this._isConnected = connected
+  }
+
+  // 移除DOM相关方法，这些应该在渲染进程中处理
   async handleOutput(data: string): Promise<void> {
-    this.terminal.write(data)
     if (this.onData) {
       this.onData(data)
     }
@@ -32,30 +34,29 @@ export class BaseSession implements ISession {
     console.warn(`[BaseSession ${this.id}] 基础handleInput方法被调用，但这应该在子类中实现。数据:`, data)
   }
 
-  async listenToTerminalEvents(): Promise<void> {
-    this.terminal.onData((data) => {
-      this.handleInput(data)
-    })
-  }
-
-  async destroyTerminal(): Promise<void> {
-    this.terminal.dispose()
-  }
-
   async connect(): Promise<void> {
-    this.terminal.focus()
-    this.terminal.writeln('Welcome to NxShell')
+    this.setConnected(true)
+    console.log(`[BaseSession ${this.id}] 连接成功`)
   }
 
   async disconnect(): Promise<void> {
-    this.terminal.dispose()
+    this.setConnected(false)
+    console.log(`[BaseSession ${this.id}] 断开连接`)
   }
 
   async sendCommand(command: string): Promise<void> {
-    ipcMain.emit('send-command', this.id, command)
+    console.warn(`[BaseSession ${this.id}] 基础sendCommand方法被调用，但这应该在子类中实现。命令:`, command)
   }
 
   clone(): ISession {
     return new BaseSession(undefined, this.type)
+  }
+
+  // 添加错误处理方法
+  protected handleError(error: Error, context: string): void {
+    console.error(`[BaseSession ${this.id}] ${context}:`, error)
+    if (this.onData) {
+      this.onData(`\r\n错误: ${error.message}\r\n`)
+    }
   }
 }

@@ -18,4 +18,5 @@ interface Window {
       external: number
     }
   }
+  dockview: import('dockview-vue').DockviewApi
 }

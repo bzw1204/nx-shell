@@ -39,6 +39,9 @@ importers:
       '@electron-toolkit/tsconfig':
         specifier: ^1.0.1
         version: 1.0.1(@types/node@22.14.1)
+      '@iconify-json/carbon':
+        specifier: ^1.2.8
+        version: 1.2.8
       '@types/node':
         specifier: ^22.14.1
         version: 22.14.1
@@ -66,6 +69,9 @@ importers:
       '@unocss/transformer-variant-group':
         specifier: ^66.0.0
         version: 66.0.0
+      '@vicons/carbon':
+        specifier: ^0.13.0
+        version: 0.13.0
       '@vicons/ionicons5':
         specifier: ^0.13.0
         version: 0.13.0
@@ -96,6 +102,12 @@ importers:
       color-thief-ts:
         specifier: ^1.1.1
         version: 1.1.1
+      dockview-core:
+        specifier: ^4.3.1
+        version: 4.3.1
+      dockview-vue:
+        specifier: ^4.3.1
+        version: 4.3.1(vue@3.5.13(typescript@5.8.3))
       electron:
         specifier: ^35.1.5
         version: 35.1.5
@@ -697,6 +709,9 @@ packages:
   '@humanwhocodes/retry@0.4.2':
     resolution: {integrity: sha512-xeO57FpIu4p1Ri3Jq/EXq4ClRm86dVF2z/+kvFnyqVYRavTZmaFaUBbWCOuuTh0o/g7DSsk6kc2vrS4Vl5oPOQ==}
     engines: {node: '>=18.18'}
+
+  '@iconify-json/carbon@1.2.8':
+    resolution: {integrity: sha512-6xh4YiFBz6qoSnB3XMe23WvjTJroDFXB17J1MbiT7nATFe+70+em1acRXr8hgP/gYpwFMHFc4IvjA/IPTPnTzg==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -1355,6 +1370,9 @@ packages:
     resolution: {integrity: sha512-wAvXp4k7jhioi4SebXW/yfzzYwsUCr9kIX4gCsUFKpCTUf8Mi7vScJXI3S+kupSUf0LbVHudR8qBbe2wFMSNUw==}
     cpu: [x64]
     os: [win32]
+
+  '@vicons/carbon@0.13.0':
+    resolution: {integrity: sha512-Z/jExyyS4gsXJc66oTqV/j98nsaiX2JlQ0IUwu9Ms3rztf8VOHEQRuX8Jey1/zbxJpFY/tU+bWvKPRFYGIvCWQ==}
 
   '@vicons/ionicons5@0.13.0':
     resolution: {integrity: sha512-zvZKBPjEXKN7AXNo2Na2uy+nvuv6SP4KAMQxpKL2vfHMj0fSvuw7JZcOPCjQC3e7ayssKnaoFVAhbYcW6v41qQ==}
@@ -2102,6 +2120,14 @@ packages:
     engines: {node: '>=8'}
     os: [darwin]
     hasBin: true
+
+  dockview-core@4.3.1:
+    resolution: {integrity: sha512-cjGIXKc1wtHHkeKisuDLNt3HSHCVzvabxm1K9Auna27A9T3QR7ISOiTJyEUKUPllkcztFYBut0vwnnvwLnPAuQ==}
+
+  dockview-vue@4.3.1:
+    resolution: {integrity: sha512-kfqOZPz4wtgZv6nCcwwgC3HVVetaVbWxhMs/tCAQicccn14RdJFh1W3zDtaKVBZ7SS8DQZmu8JZJtNzS2OBSew==}
+    peerDependencies:
+      vue: ^3.4.0
 
   doctrine@3.0.0:
     resolution: {integrity: sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==}
@@ -5054,6 +5080,10 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.2': {}
 
+  '@iconify-json/carbon@1.2.8':
+    dependencies:
+      '@iconify/types': 2.0.0
+
   '@iconify/types@2.0.0': {}
 
   '@iconify/utils@2.3.0':
@@ -5780,6 +5810,8 @@ snapshots:
 
   '@unrs/resolver-binding-win32-x64-msvc@1.5.0':
     optional: true
+
+  '@vicons/carbon@0.13.0': {}
 
   '@vicons/ionicons5@0.13.0': {}
 
@@ -6665,6 +6697,13 @@ snapshots:
       smart-buffer: 4.2.0
       verror: 1.10.1
     optional: true
+
+  dockview-core@4.3.1: {}
+
+  dockview-vue@4.3.1(vue@3.5.13(typescript@5.8.3)):
+    dependencies:
+      dockview-core: 4.3.1
+      vue: 3.5.13(typescript@5.8.3)
 
   doctrine@3.0.0:
     dependencies:

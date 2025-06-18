@@ -36,11 +36,7 @@ export default antfu(
         ignoreHTMLAttributeValues: true,
         ignoreHTMLTextContents: true
       }],
-      'unocss/order': 'warn',
-      'unocss/enforce-class-compile': ['warn', {
-        prefix: ':uno:', // 自定义前缀
-        enableFix: true // 启用自动修复
-      }]
+      'unocss/order': 'warn'
     }
   },
   unocss

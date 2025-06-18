@@ -14,8 +14,8 @@ interface TabItem {
 const tabs = ref<TabItem[]>([])
 const sessionManager = ref<TerminalSessionManager>(new TerminalSessionManager())
 
-// 创建新标签
-async function createTab(title: string = '终端', sessionType: 'local' | 'ssh' = 'local') {
+// 创建新标签 - 支持配置参数
+async function createTab(title: string = '终端', sessionType: 'local' | 'ssh' = 'local', config?: any) {
   const id = `term-${Date.now()}-${Math.floor(Math.random() * 1000)}`
 
   // 先将所有标签设为非活动
@@ -36,14 +36,14 @@ async function createTab(title: string = '终端', sessionType: 'local' | 'ssh' 
 
   // 延迟初始化终端，确保DOM已经挂载
   setTimeout(async() => {
-    await initTerminal(newTab.id, sessionType)
+    await initTerminal(newTab.id, sessionType, config)
   }, 50)
 
   return newTab
 }
 
-// 初始化终端和会话
-async function initTerminal(tabId: string, sessionType: 'local' | 'ssh' = 'local') {
+// 初始化终端和会话 - 支持配置参数
+async function initTerminal(tabId: string, sessionType: 'local' | 'ssh' = 'local', config?: any) {
   const tabIndex = tabs.value.findIndex(tab => tab.id === tabId)
   if (tabIndex === -1)
     return
@@ -85,21 +85,23 @@ async function initTerminal(tabId: string, sessionType: 'local' | 'ssh' = 'local
 
     // 根据会话类型创建对应的会话
     if (sessionType === 'ssh') {
-      // 这里可以添加SSH连接参数获取逻辑，例如弹出对话框
-      session = await sessionManager.value.createSshSession({
+      // 使用传入的配置或默认配置
+      const sshConfig = config || {
         type: 'ssh',
-        host: 'localhost', // 示例地址，实际使用时应从用户输入获取
+        host: 'localhost',
         port: 22,
-        username: 'user', // 示例用户名，实际使用时应从用户输入获取
+        username: 'user',
         name: tabItem.title
-      })
+      }
+      session = await sessionManager.value.createSshSession(sshConfig)
     } else {
-      // 本地会话
-      session = await sessionManager.value.createLocalSession({
+      // 使用传入的配置或默认配置
+      const localConfig = config || {
         type: 'local',
         shell: process.platform === 'win32' ? 'powershell.exe' : 'bash',
         name: tabItem.title
-      })
+      }
+      session = await sessionManager.value.createLocalSession(localConfig)
     }
 
     // 保存会话引用
@@ -288,6 +290,14 @@ onBeforeUnmount(() => {
 
   // 清理会话管理器
   sessionManager.value.dispose()
+})
+
+// 暴露方法给父组件
+defineExpose({
+  createTab,
+  createSshSession,
+  activateTab,
+  closeTab
 })
 </script>
 

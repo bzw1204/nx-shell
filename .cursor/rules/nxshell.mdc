@@ -1,0 +1,133 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+# NxShell 项目开发规则
+
+## 代码风格规范
+
+### 1. TypeScript/JavaScript
+
+- 使用 TypeScript 进行开发，确保类型安全
+- 使用 ESLint 和 Prettier 进行代码格式化和质量检查
+- 遵循以下格式规则：
+  - 不使用尾部逗号
+  - 单行 if 语句可以不使用大括号，但多行必须使用
+  - 函数括号前不加空格：`function test()`而非`function test ()`
+  - 块级语句前加空格：`if (condition) {`
+  - 控制台日志使用限制：允许使用 `warn`、`error`、`group`、`info`、`debug`，但尽量避免使用 `log`
+
+### 2. Vue 组件
+
+- 使用 Vue 3 + Composition API 开发组件
+- 组件文件命名采用 kebab-case（如：`theme-toggle.vue`）
+- 组件属性换行规则：单行最多 5 个属性，超过则每行 1 个
+- 组件代码行长度不超过 170 个字符
+
+### 3. CSS/样式
+
+- 使用 UnoCSS 进行样式开发
+- CSS 类名顺序遵循 UnoCSS 规则
+- 使用 UnoCSS 自定义规则和快捷方式，如：
+  - `wh-screen`：全屏宽高
+  - `wh-full`：100% 宽高
+  - `flex-center`：居中对齐的 flex 布局
+
+## 项目架构规范
+
+### 1. 目录结构
+
+- 遵循 README.md 中定义的项目结构
+- 前端代码放在 `src/` 目录下
+- Electron 主进程代码放在 `src-electron/` 目录下
+- 类型定义放在 `@types/` 目录下
+
+### 2. 组件开发
+
+- 公共组件放在 `src/components/` 目录下
+- 页面视图放在 `src/views/` 目录下
+- 布局组件放在 `src/layouts/` 目录下
+
+### 3. 类型定义
+
+- 全局类型定义放在 `@types/` 目录下
+- 组件相关类型定义放在 `src/@types/` 目录下
+- Electron 主进程类型定义放在 `src-electron/@types/` 目录下
+
+## 开发流程规范
+
+### 1. Git 工作流
+
+- 遵循分支开发模式：从主分支创建功能分支进行开发
+- 提交前进行类型检查：`npm run typecheck`
+- 提交前进行代码格式化：`npm run format`
+- 提交前进行代码检查：`npm run lint`
+
+### 2. 构建与发布
+
+- 使用 `pnpm` 作为包管理工具
+- 开发模式启动：`pnpm dev`
+- 构建应用：
+  - Windows 版本：`pnpm build:win`
+  - macOS 版本：`pnpm build:mac`
+  - Linux 版本：`pnpm build:linux`
+
+## 终端组件开发规范
+
+### 1. 终端功能
+
+- 终端组件基于 xterm.js 开发
+- 遵循 NxTerminal 类的接口设计
+- 使用 WebGL 渲染（如可用）提高性能，自动降级为 Canvas 渲染
+- 确保实现快捷键支持
+
+### 2. 性能优化
+
+- 使用 FitAddon 自动调整终端大小
+- 在窗口大小变化时调整终端尺寸
+- 合理处理资源释放和事件监听
+
+## 安全规范
+
+### 1. Electron 安全
+
+- 默认禁用开发者工具（F12）
+- 使用上下文隔离保护主进程
+- 外部链接在默认浏览器中打开
+- 适当配置 CSP（内容安全策略）
+
+### 2. 终端安全
+
+- 合理处理用户输入，防止注入攻击
+- SSH 连接使用安全的密钥管理机制
+- 敏感信息（如密码）不以明文存储
+
+## UI/UX 规范
+
+### 1. 设计风格
+
+- 使用 Naive UI 组件库，保持 UI 一致性
+- 支持亮色/暗色主题切换
+- 遵循现代化设计风格
+- 保持界面简洁、直观
+
+### 2. 响应式设计
+
+- 适配不同屏幕大小
+- 使用 UnoCSS 的响应式工具类
+- 关注用户体验细节
+
+## 文档规范
+
+### 1. 代码注释
+
+- 对复杂逻辑添加必要的注释
+- 使用 JSDoc 风格注释函数和类
+- 对公共 API 提供完整的文档
+
+### 2. 项目文档
+
+- 保持 README.md 文档的更新
+- 提供清晰的安装和使用说明
+- 记录重要的架构决策

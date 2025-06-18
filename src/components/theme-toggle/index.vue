@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" name="ThemeToggle">
 import { useDark, useToggle } from '@vueuse/core'
 
 interface Props {
@@ -43,39 +43,28 @@ async function toggleDark({ clientX, clientY }: MouseEvent) {
 <template>
   <n-tooltip trigger="hover">
     <template #trigger>
-      <n-button
-        quaternary
+      <NButton
+        text
+        class=":uno: w-full flex justify-center text-gray-400 hover:text-white"
+        :focusable="false"
         :circle="!normal"
         :size="size"
-        :focusable="false"
-        class=":uno: theme-toggle-btn"
-        :title="isDark ? '切换到亮色模式' : '切换到暗色模式'"
         @click="toggleDark"
       >
-        <template #icon>
-          <span class=":uno: icon-wrapper" :class="{ ':uno: dark': isDark, ':uno: light': !isDark }">
-            <span
-              :class="[
-                `${isDark ? ':uno: i-carbon-moon' : ':uno: i-carbon-sun'}`,
-                { ':uno: sun-anim': !isDark, ':uno: moon-anim': isDark },
-              ]"
-            />
-          </span>
-        </template>
-      </n-button>
+        <NIcon size="24">
+          <span
+            :class="[
+              `${isDark ? ':uno: i-carbon-moon moon-anim' : ':uno: i-carbon:sun sun-anim'}`,
+            ]"
+          />
+        </NIcon>
+      </NButton>
     </template>
     {{ isDark ? '切换到亮色模式' : '切换到暗色模式' }}
   </n-tooltip>
 </template>
 
-<style scoped>
-.icon-wrapper {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
+<style scoped lang="scss">
 .sun-anim {
   animation: sun-appear 2s cubic-bezier(0.4, 0, 0.2, 1);
 }

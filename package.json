@@ -41,7 +41,8 @@
   ],
   "main": "./out/main/index.js",
   "engines": {
-    "node": ">=22.14.0"
+    "node": ">=22.14.0",
+    "pnpm": ">=10.0.0"
   },
   "scripts": {
     "format": "prettier --write .",
@@ -72,6 +73,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "^4.12.0",
     "@electron-toolkit/tsconfig": "^1.0.1",
+    "@iconify-json/carbon": "^1.2.8",
     "@types/node": "^22.14.1",
     "@types/ssh2": "^1.15.5",
     "@unocss/eslint-config": "^66.1.3",
@@ -81,6 +83,7 @@
     "@unocss/preset-tagify": "^66.0.0",
     "@unocss/transformer-directives": "^66.0.0",
     "@unocss/transformer-variant-group": "^66.0.0",
+    "@vicons/carbon": "^0.13.0",
     "@vicons/ionicons5": "^0.13.0",
     "@vitejs/plugin-vue": "^5.2.3",
     "@vitejs/plugin-vue-jsx": "^4.1.2",
@@ -91,6 +94,8 @@
     "@xterm/addon-webgl": "^0.18.0",
     "@xterm/xterm": "^5.5.0",
     "color-thief-ts": "^1.1.1",
+    "dockview-core": "^4.3.1",
+    "dockview-vue": "^4.3.1",
     "electron": "^35.1.5",
     "electron-builder": "^25.1.8",
     "electron-log": "^5.3.3",

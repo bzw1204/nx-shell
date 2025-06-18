@@ -12,6 +12,9 @@ import { SshSession } from './ssh-session'
 export class IpcExchange {
   private sessionManager: SessionManager
   private mainWindow?: BrowserWindow
+  private outputBuffer: Map<string, { data: string[], timer?: NodeJS.Timeout }> = new Map()
+  private readonly BATCH_SIZE = 10
+  private readonly BATCH_TIMEOUT = 16 // 16ms ≈ 60fps
 
   constructor(sessionManager: SessionManager) {
     this.sessionManager = sessionManager
@@ -29,6 +32,8 @@ export class IpcExchange {
       this.sendToRenderer('session:removed', {
         id: session.id
       })
+      // 清理缓冲区
+      this.clearOutputBuffer(session.id)
     })
 
     this.sessionManager.on('sessionSwitched', (session) => {
@@ -44,6 +49,67 @@ export class IpcExchange {
    */
   setMainWindow(window: BrowserWindow): void {
     this.mainWindow = window
+  }
+
+  /**
+   * 清理输出缓冲区
+   */
+  private clearOutputBuffer(sessionId: string): void {
+    const buffer = this.outputBuffer.get(sessionId)
+    if (buffer?.timer) {
+      clearTimeout(buffer.timer)
+    }
+    this.outputBuffer.delete(sessionId)
+  }
+
+  /**
+   * 批量发送数据到渲染进程
+   */
+  private batchSendData(sessionId: string, data: string): void {
+    let buffer = this.outputBuffer.get(sessionId)
+    if (!buffer) {
+      buffer = { data: [] }
+      this.outputBuffer.set(sessionId, buffer)
+    }
+
+    buffer.data.push(data)
+
+    // 如果缓冲区满了，立即发送
+    if (buffer.data.length >= this.BATCH_SIZE) {
+      this.flushBuffer(sessionId)
+      return
+    }
+
+    // 设置定时器，确保数据不会延迟太久
+    if (!buffer.timer) {
+      buffer.timer = setTimeout(() => {
+        this.flushBuffer(sessionId)
+      }, this.BATCH_TIMEOUT)
+    }
+  }
+
+  /**
+   * 刷新缓冲区
+   */
+  private flushBuffer(sessionId: string): void {
+    const buffer = this.outputBuffer.get(sessionId)
+    if (!buffer || buffer.data.length === 0) {
+      return
+    }
+
+    if (buffer.timer) {
+      clearTimeout(buffer.timer)
+      buffer.timer = undefined
+    }
+
+    // 合并数据并发送
+    const combinedData = buffer.data.join('')
+    buffer.data = []
+
+    this.sendToRenderer('session:data', {
+      id: sessionId,
+      data: combinedData
+    })
   }
 
   /**
@@ -68,15 +134,26 @@ export class IpcExchange {
   }
 
   /**
-   * 发送数据到渲染进程
+   * 发送数据到渲染进程（带重试机制）
    */
-  private sendToRenderer(channel: string, data: any): void {
+  private sendToRenderer(channel: string, data: any, retries: number = 3): void {
     if (!this.mainWindow || this.mainWindow.isDestroyed()) {
       logger.warn(`Cannot send message to renderer: ${channel}, window not available`)
       return
     }
 
-    this.mainWindow.webContents.send(channel, data)
+    try {
+      this.mainWindow.webContents.send(channel, data)
+    } catch (error) {
+      logger.error(`发送消息到渲染进程失败: ${channel}`, error)
+
+      // 重试机制
+      if (retries > 0) {
+        setTimeout(() => {
+          this.sendToRenderer(channel, data, retries - 1)
+        }, 100)
+      }
+    }
   }
 
   /**
@@ -100,12 +177,9 @@ export class IpcExchange {
     try {
       const session = this.createSessionInstance(type, config)
 
-      // 设置数据处理函数，将输出转发给渲染进程
+      // 设置数据处理函数，使用批量发送
       session.onData = (data: string) => {
-        this.sendToRenderer('session:data', {
-          id: session.id,
-          data
-        })
+        this.batchSendData(session.id, data)
       }
 
       this.sessionManager.addSession(session)
@@ -131,7 +205,7 @@ export class IpcExchange {
       const timeoutPromise = new Promise<never>((_, reject) => {
         setTimeout(() => {
           reject(new Error(`会话连接超时: ${sessionId}`))
-        }, 5000) // 5秒超时
+        }, 15000) // 15秒超时，给足够时间
       })
 
       await Promise.race([connectPromise, timeoutPromise])
@@ -153,6 +227,7 @@ export class IpcExchange {
 
     try {
       await session.disconnect()
+      this.clearOutputBuffer(sessionId)
       return true
     } catch (error) {
       logger.error(`断开会话 ${sessionId} 失败`, error)
@@ -166,6 +241,7 @@ export class IpcExchange {
   private async handleRemoveSession(_event: IpcMainInvokeEvent, sessionId: string): Promise<boolean> {
     try {
       this.sessionManager.removeSession(sessionId)
+      this.clearOutputBuffer(sessionId)
       return true
     } catch (error) {
       logger.error(`移除会话 ${sessionId} 失败`, error)
@@ -190,11 +266,16 @@ export class IpcExchange {
    * 处理获取会话列表请求
    */
   private async handleListSessions(): Promise<Array<{ id: string, type: SessionType }>> {
-    const sessions = this.sessionManager.getAll()
-    return sessions.map(session => ({
-      id: session.id,
-      type: session.type
-    }))
+    try {
+      const sessions = this.sessionManager.getAll()
+      return sessions.map(session => ({
+        id: session.id,
+        type: session.type
+      }))
+    } catch (error) {
+      logger.error('获取会话列表失败', error)
+      throw error
+    }
   }
 
   /**
@@ -229,26 +310,23 @@ export class IpcExchange {
   }
 
   /**
-   * 处理会话输入
+   * 处理会话输入（异步处理，避免阻塞）
    */
   private handleSessionInput(_event: IpcMainEvent, sessionId: string, data: string): void {
-    const session = this.sessionManager.getSession(sessionId)
-    if (!session) {
-      logger.warn(`无法处理输入：会话不存在 ${sessionId}`)
-      return
-    }
+    // 异步处理，避免阻塞IPC主线程
+    setImmediate(async() => {
+      const session = this.sessionManager.getSession(sessionId)
+      if (!session) {
+        logger.warn(`无法处理输入：会话不存在 ${sessionId}`)
+        return
+      }
 
-    try {
-      // 输入数据的十六进制表示，便于调试
-      const hexData = Array.from(data).map(c => c.charCodeAt(0).toString(16).padStart(2, '0')).join(' ')
-      logger.info(`[IpcExchange] 处理会话 ${sessionId} 输入: "${data.replace(/\r/g, '\\r')}" (hex: ${hexData})`)
-
-      // 直接交给会话处理，不做特殊处理
-      // 每个输入只调用一次方法，避免重复处理
-      session.handleInput(data)
-    } catch (error) {
-      logger.error(`处理会话 ${sessionId} 输入失败`, error)
-    }
+      try {
+        await session.handleInput(data)
+      } catch (error) {
+        logger.error(`处理会话 ${sessionId} 输入失败`, error)
+      }
+    })
   }
 
   /**
@@ -261,7 +339,6 @@ export class IpcExchange {
     }
 
     try {
-      // 假设会话有 resize 方法，根据实际情况调整
       if ('resize' in session && typeof (session as any).resize === 'function') {
         (session as any).resize(cols, rows)
       }
@@ -270,5 +347,16 @@ export class IpcExchange {
       logger.error(`调整会话 ${sessionId} 终端大小失败`, error)
       throw error
     }
+  }
+
+  /**
+   * 清理资源
+   */
+  destroy(): void {
+    // 清理所有缓冲区
+    for (const [sessionId] of this.outputBuffer) {
+      this.clearOutputBuffer(sessionId)
+    }
+    this.outputBuffer.clear()
   }
 }
