@@ -35,6 +35,7 @@ declare module 'vue' {
     NText: typeof import('naive-ui')['NText']
     NTooltip: typeof import('naive-ui')['NTooltip']
     NTree: typeof import('naive-ui')['NTree']
+    NxshellBackground: typeof import('./../components/background/nxshell-background.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SmailLoading: typeof import('./../components/smail-loading/index.vue')['default']

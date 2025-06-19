@@ -6,24 +6,13 @@ import { FileExplorer, MxHeader, MxMenus } from './components'
 import 'dockview-vue/dist/styles/dockview.css'
 
 function onReady({ api }: DockviewReadyEvent) {
-  // 左侧资源管理器面板
-  // const explorer = api.addPanel({
-  //   id: 'explorer',
-  //   title: 'Explorer',
-  //   component: 'file-explorer',
-  //   minimumWidth: 0,
-  //   maximumWidth: 500
-  // })
-  // explorer.group.api.setSize({ width: 200 })
-  // explorer.group.header.hidden = true
-  // explorer.group.locked = 'no-drop-target'
   window.dockview = api
   // 右侧编辑器面板
-  api.addPanel({
-    id: 'editor',
-    title: 'Editor',
-    component: 'editor'
-  })
+  // api.addPanel({
+  //   id: 'editor',
+  //   title: 'Editor',
+  //   component: 'editor'
+  // })
 }
 const showPanel = ref('200px')
 function togglePanel() {
@@ -65,13 +54,15 @@ function togglePanel() {
             <component :is="FileExplorer" />
           </template>
           <template #2>
-            <DockviewVue
-              class="wh-full"
-              :theme="themeDracula"
-              watermark-component="watermark"
-              :disable-floating-groups="true"
-              @ready="onReady"
-            />
+            <n-el class="wh-full">
+              <DockviewVue
+                class="wh-full"
+                :theme="themeDracula"
+                watermark-component="watermark"
+                :disable-floating-groups="true"
+                @ready="onReady"
+              />
+            </n-el>
           </template>
         </n-split>
       </n-layout-content>
