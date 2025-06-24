@@ -10,6 +10,8 @@
       "windows": {
         "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron-vite.cmd"
       },
+      // https://github.com/alex8088/electron-vite/issues/770
+      "experimentalNetworking": "off",
       "runtimeArgs": ["--sourcemap"],
       "env": {
         "REMOTE_DEBUGGING_PORT": "9222"
