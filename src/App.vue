@@ -1,12 +1,19 @@
 <script setup lang="ts">
+import type { GlobalThemeOverrides } from 'naive-ui'
 import { NaiveProviderContent } from '@/components'
 import { darkTheme } from 'naive-ui'
 
 const { theme } = storeToRefs(useSettingStore())
+const appTheme = computed(() => theme.value === 'dark' ? darkTheme : null)
+const themeOverrides: GlobalThemeOverrides = {
+  Split: {
+    resizableTriggerColor: 'transparent'
+  }
+}
 </script>
 
 <template>
-  <n-config-provider :theme="theme === 'dark' ? darkTheme : null" class=":uno: select-none">
+  <n-config-provider :theme="appTheme" :theme-overrides="themeOverrides" class=":uno: select-none">
     <NaiveProviderContent>
       <router-view />
     </NaiveProviderContent>

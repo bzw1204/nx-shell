@@ -15,10 +15,6 @@ function onReady({ api }: DockviewReadyEvent) {
   // })
 }
 const showPanel = ref('200px')
-function togglePanel() {
-  console.log(showPanel.value)
-  showPanel.value = showPanel.value === '200px' ? '0' : '200px'
-}
 </script>
 
 <template>
@@ -34,9 +30,8 @@ function togglePanel() {
         content-class="h-[calc(100vh-40px)] border-box"
         :width="48"
         :collapsed-width="48"
-        bordered
       >
-        <MxMenus @click="togglePanel" />
+        <MxMenus />
       </n-layout-sider>
 
       <!-- 主内容区域 - 使用分割面板 -->

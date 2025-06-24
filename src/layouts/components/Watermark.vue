@@ -4,7 +4,9 @@
 <template>
   <div class="n-home-empty">
     <div class="n-home-content">
-      <span class="n-logo i-color:logo text-70" />
+      <div class="n-logo">
+        <span class="i-color:logo text-70" />
+      </div>
       <p class="n-logo-text">
         NxShell
       </p>
@@ -46,10 +48,10 @@
       &::before {
         position: absolute;
         content: '';
-        width: 65px;
+        width: 60px;
         height: 60px;
         background: var(--n-text-color);
-        transform: translate(-35px, 25px) scaleY(0.5) skew(50deg);
+        transform: translate(-25px, 25px) scaleY(0.5) skew(50deg);
         z-index: -1;
         filter: blur(5px);
         -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(transparent), to(var(--n-color)));

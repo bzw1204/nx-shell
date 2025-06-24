@@ -1,4 +1,16 @@
-import { NDialogProvider, NGlobalStyle, NLoadingBarProvider, NMessageProvider, NModalProvider, NNotificationProvider, useDialog, useLoadingBar, useMessage, useModal, useNotification } from 'naive-ui'
+import {
+  NDialogProvider,
+  NGlobalStyle,
+  NLoadingBarProvider,
+  NMessageProvider,
+  NModalProvider,
+  NNotificationProvider,
+  useDialog,
+  useLoadingBar,
+  useMessage,
+  useModal,
+  useNotification
+} from 'naive-ui'
 import { defineComponent } from 'vue'
 
 const RegisterNaiveTools = defineComponent({

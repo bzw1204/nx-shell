@@ -38,8 +38,9 @@ declare module 'vue' {
     NxshellBackground: typeof import('./../components/background/nxshell-background.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Settings: typeof import('./../components/settings/index.vue')['default']
     SmailLoading: typeof import('./../components/smail-loading/index.vue')['default']
-    Terminal: typeof import('./../components/terminal/index.vue')['default']
+    Terminal: typeof import('./../components/settings/components/terminal.vue')['default']
     TerminalTabs: typeof import('./../components/terminal/terminal-tabs.vue')['default']
     ThemeToggle: typeof import('./../components/theme-toggle/index.vue')['default']
   }

@@ -38,6 +38,13 @@ function handleMenuClick(item: any) {
     activeKey.value = item.key
   }
 }
+function handleSetting() {
+  window.dockview.addPanel({
+    id: 'setting',
+    title: '设置',
+    component: 'settings'
+  })
+}
 </script>
 
 <template>
@@ -67,7 +74,7 @@ function handleMenuClick(item: any) {
           <NButton
             text
             class=":uno: w-full flex justify-center text-gray-400 hover:text-white"
-            @click="() => $router.push('/settings')"
+            @click="handleSetting"
           >
             <NIcon size="24">
               <SettingsOutline />
