@@ -89,7 +89,7 @@ const faceAnimation = computed(() => {
         fill="none"
         stroke-width="20"
         :animate="loading ? {
-          strokeDasharray: '128, 1282',
+          strokeDasharray: '0, 1282',
           transition: {
             repeat: Infinity,
             duration: 3,
@@ -204,6 +204,7 @@ const faceAnimation = computed(() => {
     stroke-width: 20;
     fill: none;
     transform-origin: center;
+    transform: rotate(90deg); // 起点从底部
     will-change: stroke-dashoffset, stroke;
   }
 
