@@ -24,48 +24,13 @@ const containerStyle = computed(() => ({
   '--size': `${size}px`,
   '--color': (color || defaultColor)[status]
 }))
-
-// 定义表情动画配置
-const faceAnimation = computed(() => {
-  if (status === 'loading') {
-    return {
-      scale: 0.95,
-      opacity: 0.9,
-      transition: {
-        duration: 0.3,
-        ease: [0.4, 0, 0.2, 1] as Easing
-      }
-    }
-  }
-  if (status === 'success') {
-    return {
-      scale: 1.05,
-      opacity: 1,
-      transition: {
-        duration: 0.3,
-        ease: [0.4, 0, 0.2, 1] as Easing
-      }
-    }
-  }
-  return {
-    scale: 0.95,
-    opacity: 1,
-    transition: {
-      duration: 0.3,
-      ease: [0.4, 0, 0.2, 1] as Easing
-    }
-  }
-})
 </script>
 
 <template>
-  <div
-    class=":uno: smile-loading-container :uno:"
-    :style="containerStyle"
-  >
+  <div class="smile-loading-container" :style="containerStyle">
     <!-- 进度条 SVG -->
     <svg
-      class=":uno: smile-loading-svg"
+      class="smile-loading-svg"
       viewBox="0 0 512 512"
       xmlns="http://www.w3.org/2000/svg"
       shape-rendering="geometricPrecision"
@@ -73,7 +38,7 @@ const faceAnimation = computed(() => {
       <!-- 背景圆环 -->
       <circle
         v-if="!loading"
-        class=":uno: circle-track"
+        class="circle-track"
         cx="256"
         cy="256"
         r="204"
@@ -82,30 +47,20 @@ const faceAnimation = computed(() => {
       />
       <!-- 动态进度条 -->
       <motion.circle
-        class=":uno: path"
+        :key="loading ? 'loading' : 'normal'"
+        class="path"
         cx="256"
         cy="256"
         r="204"
         fill="none"
         stroke-width="20"
-        :initial="{ strokeDasharray: '1282', strokeDashoffset: 1282 }"
-        :animate="loading ? {
-          strokeDasharray: ['1, 40', '1, 40'],
-          strokeDashoffset: [0, 1282],
+        :animate="{
+          strokeDasharray: `${loading ? '0, 1282' : '1282, 0'}`,
+          strokeDashoffset: [1282, 0],
           transition: {
-            strokeDasharray: { duration: 0.1 },
-            strokeDashoffset: {
-              duration: 2,
-              ease: 'linear',
-              repeat: Infinity,
-            },
-          },
-        } : {
-          strokeDasharray: '1282',
-          strokeDashoffset: 0,
-          transition: {
-            duration: 0.3,
-            ease: [0.4, 0, 0.2, 1] as Easing,
+            duration: 3,
+            repeat: Infinity,
+            ease: [1, 0.2, 4, 0.3],
           },
         }"
       />
@@ -113,20 +68,16 @@ const faceAnimation = computed(() => {
 
     <!-- 表情图标 SVG -->
     <svg
-      class=":uno: smile-icon-svg"
+      class="smile-icon-svg"
       viewBox="0 0 512 512"
       xmlns="http://www.w3.org/2000/svg"
       shape-rendering="geometricPrecision"
     >
-      <motion.g
-        class=":uno: smile-icon"
-        fill="none"
-        :animate="faceAnimation"
-      >
+      <motion.g class="smile-icon" fill="none">
         <!-- 脸部轮廓和眼睛 -->
-        <circle cx="256" cy="256" r="133" fill="var(--color)" class=":uno: face" />
-        <circle cx="205" cy="225" r="20" fill="var(--n-color)" class=":uno: eye" />
-        <circle cx="307" cy="225" r="20" fill="var(--n-color)" class=":uno: eye" />
+        <circle cx="256" cy="256" r="133" fill="var(--color)" class="face" />
+        <circle cx="205" cy="225" r="20" fill="var(--n-color)" class="eye" />
+        <circle cx="307" cy="225" r="20" fill="var(--n-color)" class="eye" />
 
         <!-- 嘴巴 - 根据状态变化 -->
         <motion.path
@@ -136,7 +87,7 @@ const faceAnimation = computed(() => {
           stroke-width="20"
           stroke-linecap="round"
           fill="none"
-          class=":uno: mouth"
+          class="mouth"
           :initial="{ pathLength: 0 }"
           :animate="{ pathLength: 1 }"
           :transition="{ duration: 0.5, ease: [0.4, 0, 0.2, 1] as Easing }"
@@ -148,7 +99,7 @@ const faceAnimation = computed(() => {
           stroke-width="20"
           stroke-linecap="round"
           fill="none"
-          class=":uno: mouth"
+          class="mouth"
           :initial="{ pathLength: 0 }"
           :animate="{ pathLength: 1 }"
           :transition="{ duration: 0.5, ease: [0.4, 0, 0.2, 1] as Easing }"
@@ -160,7 +111,7 @@ const faceAnimation = computed(() => {
           stroke-width="20"
           stroke-linecap="round"
           fill="none"
-          class=":uno: mouth"
+          class="mouth"
           :initial="{ pathLength: 0 }"
           :animate="{ pathLength: 1 }"
           :transition="{ duration: 0.3, ease: [0.4, 0, 0.2, 1] as Easing }"
