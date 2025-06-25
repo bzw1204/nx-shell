@@ -88,12 +88,17 @@ const faceAnimation = computed(() => {
         r="204"
         fill="none"
         stroke-width="20"
+        :initial="{ strokeDasharray: '1282', strokeDashoffset: 1282 }"
         :animate="loading ? {
-          strokeDasharray: '0, 1282',
+          strokeDasharray: ['1, 40', '1, 40'],
+          strokeDashoffset: [0, 1282],
           transition: {
-            repeat: Infinity,
-            duration: 3,
-            ease: [0.4, 0, 0.2, 1] as Easing,
+            strokeDasharray: { duration: 0.1 },
+            strokeDashoffset: {
+              duration: 2,
+              ease: 'linear',
+              repeat: Infinity,
+            },
           },
         } : {
           strokeDasharray: '1282',
