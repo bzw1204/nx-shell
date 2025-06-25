@@ -1,8 +1,20 @@
 <script setup lang="ts">
+import { SmileLoading } from '@/components'
+import { useAnimationFrame } from 'motion-v'
+
+const cubeRef = ref<HTMLElement | null>(null)
+const statusRef = ref<'success' | 'error' | 'loading'>('loading')
+useAnimationFrame((t) => {
+  const rotate = Math.sin(t / 10000) * 200
+  const y = (1 + Math.sin(t / 1000)) * -50
+  if (cubeRef.value) {
+    cubeRef.value!.style.transform = `translateY(${y}px) rotateX(${rotate}deg) rotateY(${rotate}deg)`
+  }
+})
 </script>
 
 <template>
-  <div class="n-home-empty">
+  <!-- <div class="n-home-empty">
     <div class="n-home-content">
       <div class="n-logo">
         <span class="i-color:logo text-70" />
@@ -18,6 +30,37 @@
         V1.0.0
       </div>
     </div>
+  </div> -->
+  <div class="wh-full flex items-center justify-center">
+    <div class="[perspective:800px] h-40 w-40">
+      <div
+        ref="cubeRef"
+        class="[transform-style:preserve-3d] relative h-100 w-100"
+      >
+        <div class="[transform:rotateY(0deg)_translateZ(100px)] absolute h-full w-full bg-red-500/60">
+          NxShell
+        </div>
+        <div class="[transform:rotateY(90deg)_translateZ(100px)] absolute h-full w-full bg-yellow-500/60" />
+        <div class="[transform:rotateY(180deg)_translateZ(100px)] absolute h-full w-full bg-pink-500/60" />
+        <div class="[transform:rotateY(-90deg)_translateZ(100px)] absolute h-full w-full bg-purple-500/60" />
+        <div class="[transform:rotateX(90deg)_translateZ(100px)] absolute h-full w-full bg-blue-500/60" />
+        <div class="[transform:rotateX(-90deg)_translateZ(100px)] absolute h-full w-full bg-emerald-500/60" />
+      </div>
+    </div>
+    <TextHoverEffect
+      class="min-lg:min-h-64 w-[90%]"
+      text="NxShell"
+    />
+    <n-flex vertical>
+      <n-radio-group v-model:value="statusRef" name="radiogroup">
+        <n-space>
+          <n-radio v-for="item in ['success', 'error', 'loading']" :key="item" :value="item">
+            {{ item }}
+          </n-radio>
+        </n-space>
+      </n-radio-group>
+      <SmileLoading :status="statusRef" />
+    </n-flex>
   </div>
 </template>
 

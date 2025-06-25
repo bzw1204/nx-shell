@@ -8,6 +8,10 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    ColourfulText: typeof import('./../components/inspira/ColourfulText.vue')['default']
+    IconButton: typeof import('./../components/icon-button/index.vue')['default']
+    LiquidBackground: typeof import('./../components/inspira/LiquidBackground.vue')['default']
+    MultiStepLoader: typeof import('./../components/inspira/MultiStepLoader.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
     NEl: typeof import('naive-ui')['NEl']
@@ -18,6 +22,8 @@ declare module 'vue' {
     NLayoutContent: typeof import('naive-ui')['NLayoutContent']
     NLayoutHeader: typeof import('naive-ui')['NLayoutHeader']
     NLayoutSider: typeof import('naive-ui')['NLayoutSider']
+    NRadio: typeof import('naive-ui')['NRadio']
+    NRadioGroup: typeof import('naive-ui')['NRadioGroup']
     NSpace: typeof import('naive-ui')['NSpace']
     NSplit: typeof import('naive-ui')['NSplit']
     NTooltip: typeof import('naive-ui')['NTooltip']
@@ -26,8 +32,14 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     Settings: typeof import('./../components/settings/index.vue')['default']
     SmailLoading: typeof import('./../components/smail-loading/index.vue')['default']
+    SmileLoading: typeof import('./../components/smile-loading/index.vue')['default']
+    Sparkles: typeof import('./../components/inspira/Sparkles.vue')['default']
+    SparklesText: typeof import('./../components/inspira/SparklesText.vue')['default']
     Terminal: typeof import('./../components/terminal/index.vue')['default']
+    TerminalSettings: typeof import('./../components/settings/components/terminal-settings.vue')['default']
     TerminalTabs: typeof import('./../components/terminal/terminal-tabs.vue')['default']
+    TextGenerateEffect: typeof import('./../components/inspira/TextGenerateEffect.vue')['default']
+    TextHoverEffect: typeof import('./../components/inspira/TextHoverEffect.vue')['default']
     ThemeToggle: typeof import('./../components/theme-toggle/index.vue')['default']
   }
 }

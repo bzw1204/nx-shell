@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { ThemeToggle } from '@/components'
+import { IconButton, ThemeToggle } from '@/components'
 import {
   CopyOutline,
   ExtensionPuzzleOutline,
   SearchOutline,
   SettingsOutline
 } from '@vicons/ionicons5'
-import { NButton, NIcon, NTooltip } from 'naive-ui'
 import { ref } from 'vue'
 import FileExplorer from './FileExplorer.vue'
 
@@ -50,7 +49,7 @@ function handleSetting() {
 <template>
   <n-el class=":uno: box-border h-full flex flex-col justify-between pb-10">
     <div class=":uno: flex flex-1 flex-col items-center gap-10">
-      <NTooltip v-for="item in menuItems" :key="item.key" placement="right" :show-arrow="false">
+      <n-tooltip v-for="item in menuItems" :key="item.key" placement="right" :show-arrow="false">
         <template #trigger>
           <div
             class=":uno: menu-item flex-center"
@@ -65,24 +64,12 @@ function handleSetting() {
           </div>
         </template>
         {{ item.tooltip }}
-      </NTooltip>
+      </n-tooltip>
     </div>
     <div class=":uno: flex flex-col items-center gap-20 pb-10">
+      <IconButton icon-name="i-local:cloud" tooltip="备份" />
       <ThemeToggle />
-      <NTooltip placement="right" :show-arrow="false">
-        <template #trigger>
-          <NButton
-            text
-            class=":uno: w-full flex justify-center text-gray-400 hover:text-white"
-            @click="handleSetting"
-          >
-            <NIcon size="24">
-              <SettingsOutline />
-            </NIcon>
-          </NButton>
-        </template>
-        设置
-      </NTooltip>
+      <IconButton :icon-name="SettingsOutline" tooltip="设置" @click="handleSetting" />
     </div>
   </n-el>
 </template>

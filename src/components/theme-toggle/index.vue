@@ -1,5 +1,6 @@
 <script setup lang="ts" name="ThemeToggle">
 import { useDark, useToggle } from '@vueuse/core'
+import IconButton from '../icon-button/index.vue'
 
 interface Props {
   normal?: boolean
@@ -41,27 +42,13 @@ async function toggleDark({ clientX, clientY }: MouseEvent) {
 </script>
 
 <template>
-  <n-tooltip trigger="hover">
-    <template #trigger>
-      <NButton
-        text
-        class=":uno: w-full flex justify-center text-gray-400 hover:text-white"
-        :focusable="false"
-        :circle="!normal"
-        :size="size"
-        @click="toggleDark"
-      >
-        <NIcon size="24">
-          <span
-            :class="[
-              `${isDark ? ':uno: i-carbon-moon moon-anim' : ':uno: i-carbon:sun sun-anim'}`,
-            ]"
-          />
-        </NIcon>
-      </NButton>
-    </template>
-    {{ isDark ? '切换到亮色模式' : '切换到暗色模式' }}
-  </n-tooltip>
+  <IconButton
+    :circle="!normal"
+    :size="size"
+    :tooltip="isDark ? '切换到亮色模式' : '切换到暗色模式'"
+    :icon-name="isDark ? ':uno: i-carbon-moon moon-anim' : ':uno: i-carbon:sun sun-anim'"
+    @click="toggleDark"
+  />
 </template>
 
 <style scoped lang="scss">

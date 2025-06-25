@@ -1,4 +1,4 @@
-<script setup lang="ts" name="SmailLoading">
+<script setup lang="ts" name="SmileLoading">
 import type { Easing } from 'motion-v/dist/es/types'
 import { motion } from 'motion-v'
 
@@ -56,51 +56,6 @@ const faceAnimation = computed(() => {
     }
   }
 })
-
-// 定义圆圈动画配置
-const circleAnimation = computed(() => {
-  if (loading.value) {
-    return {
-      rotate: 360,
-      transition: {
-        repeat: Infinity,
-        duration: 2,
-        ease: 'linear' as any
-      }
-    }
-  }
-  return {
-    rotate: 0,
-    transition: {
-      duration: 0.3,
-      ease: [0.4, 0, 0.2, 1] as Easing
-    }
-  }
-})
-
-// 定义进度条动画配置
-const pathAnimation = computed(() => {
-  if (loading.value) {
-    return {
-      strokeDasharray: '80, 1282',
-      strokeDashoffset: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-        ease: [0.4, 0, 0.2, 1] as Easing
-      }
-    }
-  }
-  return {
-    strokeDasharray: '1282',
-    strokeDashoffset: 0,
-    opacity: loading.value ? 1 : 0,
-    transition: {
-      duration: 0.3,
-      ease: [0.4, 0, 0.2, 1] as Easing
-    }
-  }
-})
 </script>
 
 <template>
@@ -109,11 +64,11 @@ const pathAnimation = computed(() => {
     :style="containerStyle"
   >
     <!-- 进度条 SVG -->
-    <motion.svg
+    <svg
       class=":uno: smile-loading-svg"
       viewBox="0 0 512 512"
+      xmlns="http://www.w3.org/2000/svg"
       shape-rendering="geometricPrecision"
-      :animate="circleAnimation"
     >
       <!-- 背景圆环 -->
       <circle
@@ -133,14 +88,29 @@ const pathAnimation = computed(() => {
         r="204"
         fill="none"
         stroke-width="20"
-        :animate="pathAnimation"
+        :animate="loading ? {
+          strokeDasharray: '128, 1282',
+          transition: {
+            repeat: Infinity,
+            duration: 3,
+            ease: [0.4, 0, 0.2, 1] as Easing,
+          },
+        } : {
+          strokeDasharray: '1282',
+          strokeDashoffset: 0,
+          transition: {
+            duration: 0.3,
+            ease: [0.4, 0, 0.2, 1] as Easing,
+          },
+        }"
       />
-    </motion.svg>
+    </svg>
 
     <!-- 表情图标 SVG -->
     <svg
       class=":uno: smile-icon-svg"
       viewBox="0 0 512 512"
+      xmlns="http://www.w3.org/2000/svg"
       shape-rendering="geometricPrecision"
     >
       <motion.g
@@ -211,7 +181,6 @@ const pathAnimation = computed(() => {
     width: 100%;
     height: 100%;
     will-change: transform;
-    transform-origin: center;
   }
 
   .smile-icon-svg {

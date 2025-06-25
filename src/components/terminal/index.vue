@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" name="NxTerminal">
 import type { IDockviewPanel } from 'dockview-vue'
 import type { TerminalSession } from 'terminal'
 import { NxTerminal } from './index'

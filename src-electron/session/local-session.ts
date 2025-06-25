@@ -37,7 +37,8 @@ export class LocalSession extends BaseSession {
             cwd: process.env.HOME || process.cwd(),
             env: process.env,
             cols: 100,
-            rows: 40
+            rows: 40,
+            useConpty: false
           })
 
           this.pty.onData((data) => {
