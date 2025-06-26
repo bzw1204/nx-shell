@@ -3,13 +3,15 @@ import SystemControl from './SystemControl.vue'
 
 const isMac = ref(window.$api.platform.isMacOS)
 function handleLocalTerminal() {
+  const time = new Date().getTime()
   window.dockview.addPanel({
-    id: 'local-terminal',
+    id: `local-terminal-${time}`,
     title: 'Local Terminal',
     component: 'NxTerminal',
+    tabComponent: 'terminal-tab',
     params: {
       type: 'local',
-      id: new Date().getTime()
+      id: `${time}`
     }
   })
 }
